@@ -7,6 +7,8 @@
 //
 
 #import "DrinkAppDelegate.h"
+#import "RootViewController.h"
+#import "LoginViewController.h"
 
 @implementation DrinkAppDelegate
 
@@ -19,7 +21,18 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+//    RootViewController *viewController = [[RootViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc]init];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"sessionid"] == nil) {
+        LoginViewController *loginView = [[LoginViewController alloc] init];
+        [navController pushViewController:loginView animated:NO];
+    }
+    
+    self.window.rootViewController = navController;
     [self.window makeKeyAndVisible];
+    
+
     return YES;
 }
 
