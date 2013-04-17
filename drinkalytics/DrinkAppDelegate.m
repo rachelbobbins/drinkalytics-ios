@@ -22,10 +22,13 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
-//    RootViewController *viewController = [[RootViewController alloc] init];
     UINavigationController *navController = [[UINavigationController alloc]init];
+    RootViewController *mainController = [[RootViewController alloc] init];
+    [navController pushViewController:mainController animated:NO];
+    
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"sessionid"] == nil) {
         LoginViewController *loginView = [[LoginViewController alloc] init];
+        loginView.navigationItem.hidesBackButton = YES;
         [navController pushViewController:loginView animated:NO];
     }
     

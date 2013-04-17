@@ -32,6 +32,7 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.title = @"Drinkalytics";
+//    self.navigationItem.backBarButtonItem.i
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
@@ -184,13 +185,13 @@
     NSMutableString *postString = [[NSMutableString alloc]init];
     [postString appendFormat:@"username=%@", username];
     [postString appendFormat:@"&password=%@", password];
-//    NSLog(@"post string: %@", postString);
     [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
     NSHTTPURLResponse *response;
     NSError *error;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    NSLog(@"data: %@", data);
-    NSLog(@"resposne: %i", [response statusCode]);
+    NSLog(@"data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+    NSLog(@"response: %i", [response statusCode]);
+    [self.navigationController popViewControllerAnimated:YES];
 //    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 //    NSLog(@"%@", request);
 }
