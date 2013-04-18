@@ -21,6 +21,8 @@
 		5AD5228F171F2439002D2A3F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD5228E171F2439002D2A3F /* LoginViewController.m */; };
 		5AD52295171F5955002D2A3F /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD52294171F5955002D2A3F /* RootViewController.m */; };
 		5AD52298171F603A002D2A3F /* LeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD52297171F603A002D2A3F /* LeaderboardViewController.m */; };
+		5AD522A4171F832A002D2A3F /* TakeADrinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD522A3171F832A002D2A3F /* TakeADrinkViewController.m */; };
+		5AD522AC171F8E33002D2A3F /* Drink.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD522AB171F8E33002D2A3F /* Drink.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,10 @@
 		5AD52294171F5955002D2A3F /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = ../RootViewController.m; sourceTree = "<group>"; };
 		5AD52296171F603A002D2A3F /* LeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaderboardViewController.h; sourceTree = "<group>"; };
 		5AD52297171F603A002D2A3F /* LeaderboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderboardViewController.m; sourceTree = "<group>"; };
+		5AD522A2171F832A002D2A3F /* TakeADrinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TakeADrinkViewController.h; sourceTree = "<group>"; };
+		5AD522A3171F832A002D2A3F /* TakeADrinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TakeADrinkViewController.m; sourceTree = "<group>"; };
+		5AD522AA171F8E33002D2A3F /* Drink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drink.h; sourceTree = "<group>"; };
+		5AD522AB171F8E33002D2A3F /* Drink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Drink.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +103,10 @@
 				5AD52294171F5955002D2A3F /* RootViewController.m */,
 				5AD52296171F603A002D2A3F /* LeaderboardViewController.h */,
 				5AD52297171F603A002D2A3F /* LeaderboardViewController.m */,
+				5AD522A2171F832A002D2A3F /* TakeADrinkViewController.h */,
+				5AD522A3171F832A002D2A3F /* TakeADrinkViewController.m */,
+				5AD522AA171F8E33002D2A3F /* Drink.h */,
+				5AD522AB171F8E33002D2A3F /* Drink.m */,
 				5AD5228D171F2439002D2A3F /* LoginViewController.h */,
 				5AD5228E171F2439002D2A3F /* LoginViewController.m */,
 				5AD52273171F1B9A002D2A3F /* DrinkAppDelegate.h */,
@@ -193,6 +203,8 @@
 				5AD5228F171F2439002D2A3F /* LoginViewController.m in Sources */,
 				5AD52295171F5955002D2A3F /* RootViewController.m in Sources */,
 				5AD52298171F603A002D2A3F /* LeaderboardViewController.m in Sources */,
+				5AD522A4171F832A002D2A3F /* TakeADrinkViewController.m in Sources */,
+				5AD522AC171F8E33002D2A3F /* Drink.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +313,7 @@
 				5AD52283171F1B9A002D2A3F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

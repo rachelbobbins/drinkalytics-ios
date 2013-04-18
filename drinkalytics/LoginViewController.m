@@ -33,7 +33,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.title = @"Drinkalytics";
 //    self.navigationItem.backBarButtonItem.i
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -192,20 +192,7 @@
     NSLog(@"data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     NSLog(@"response: %i", [response statusCode]);
     [self.navigationController popViewControllerAnimated:YES];
-//    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-//    NSLog(@"%@", request);
 }
-#pragma NSURLConnection Delegates
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    NSLog(@"data: %@", data);
-}
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
-                                 message:[error localizedDescription]
-                                delegate:nil
-                       cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                       otherButtonTitles:nil] show];
-}
+
 
 @end

@@ -1,5 +1,5 @@
 //
-//  LoginViewController.h
+//  Drink.h
 //  drinkalytics
 //
 //  Created by Rachel Bobbins on 4/17/13.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginViewController : UITableViewController
-@property UITextField *nameField;
-@property UITextField *passwordField;
-
+@interface Drink : UIView
++ (NSArray *)types;
 @end

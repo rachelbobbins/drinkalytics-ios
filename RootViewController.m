@@ -8,6 +8,7 @@
 
 #import "RootViewController.h"
 #import "LeaderboardViewController.h"
+#import "TakeADrinkViewController.h"
 
 @interface RootViewController ()
 
@@ -28,11 +29,11 @@
 {
     [super viewDidLoad];
     [self.navigationItem setTitle:@"Drinkalytics"];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Drink"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(takeDrink)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -112,8 +113,13 @@
 
 - (void) tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    
     [self.navigationController pushViewController:[[LeaderboardViewController alloc] init] animated:YES];
 }
 
+- (void) takeDrink
+{
+    TakeADrinkViewController *drinkController = [[TakeADrinkViewController alloc] init];
+    [self.navigationController pushViewController:drinkController animated:YES];
+}
 @end
