@@ -9,5 +9,12 @@
 #import <CoreData/CoreData.h>
 
 @interface Drink : NSManagedObject
++ (NSArray *)types;
+- (NSString *)elapsedTime;
+
+@property NSDate *timestamp;
+@property NSString *type;
+@property NSString *details;
+
 
 @end

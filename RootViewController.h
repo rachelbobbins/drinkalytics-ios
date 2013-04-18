@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface RootViewController : UITableViewController
-
+@property (nonatomic, retain) NSMutableArray *drinksArray;
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @end

@@ -8,18 +8,20 @@
 
 #import "TakeADrinkViewController.h"
 #import "Drink.h"
+#import "DrinkAppDelegate.h"
 
 @interface TakeADrinkViewController ()
 
 @end
 
 @implementation TakeADrinkViewController
+//@synthesize managedObjectContext;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        // Custom initialization
+        self.managedObjectContext = [(DrinkAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     }
     return self;
 }
@@ -44,17 +46,23 @@
 {
     NSString *type = [[Drink types] objectAtIndex:[self.typePicker selectedRowInComponent:0]];
     NSString *details = self.detailsField.text;
-    NSLog(@"drink of type %@. Also, %@", type, details);
-    NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
-    [DateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-    NSLog(@"%@",[DateFormatter stringFromDate:[NSDate date]]);
+
+    Drink *drink = (Drink *)[NSEntityDescription insertNewObjectForEntityForName:@"Drink"
+                                                          inManagedObjectContext:self.managedObjectContext];
+    [drink setDetails:details];
+    [drink setType:type];
+    [drink setTimestamp:[NSDate date]];
+    NSError *error = nil;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Error saving drink");
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

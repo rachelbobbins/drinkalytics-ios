@@ -23,7 +23,17 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     UINavigationController *navController = [[UINavigationController alloc]init];
+    
+    NSManagedObjectContext *context = [self managedObjectContext];
+    if (!context) {
+        NSLog(@"no context");
+    }
+    // Pass the managed object context to the view controller.
+
+    
     RootViewController *mainController = [[RootViewController alloc] init];
+    mainController.managedObjectContext = context;
+    
     [navController pushViewController:mainController animated:NO];
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"sessionid"] == nil) {

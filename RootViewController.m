@@ -9,12 +9,15 @@
 #import "RootViewController.h"
 #import "LeaderboardViewController.h"
 #import "TakeADrinkViewController.h"
+#import "Drink.h"
 
 @interface RootViewController ()
 
 @end
 
 @implementation RootViewController
+@synthesize drinksArray;
+@synthesize managedObjectContext;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -34,6 +37,11 @@
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(takeDrink)];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self setDrinksArray];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,7 +63,7 @@
         case 0:
             return 3;
         case 1:
-            return 3;
+            return [self.drinksArray count];
         default:
             return 0;
     }
@@ -63,33 +71,39 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+//    UITableViewCell *cell;
+    
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
     NSString *label;
     NSString *details;
-    CGFloat adjustedWidth = cell.bounds.size.width - 20.0;
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             label = @"Total Drinks";
-            details = @"47";
+            details = [NSString stringWithFormat:@"%i", [self.drinksArray count]];
         } else if (indexPath.row == 1) {
             label = @"Last Drink";
-            details = @"23 minutes ago";
+            details = [(Drink *)[self.drinksArray objectAtIndex:0] elapsedTime];
         } else {
             label = @"Rank in class";
             details = @"4 of 56";
-            adjustedWidth = adjustedWidth - 30.0;
             [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
         }
-    }   else {
-            label = @"No drinks yet";
+        
+    }  else if (indexPath.section == 1) {
+        Drink *drink = [self.drinksArray objectAtIndex:indexPath.row];
+        NSLog(@"drink: %@", drink);
+        if (drink.details && drink.type) {
+            label = [NSString stringWithFormat:@"%@: %@", drink.type, drink.details];
+        } else {
+            label = drink.type;
+        }
+        NSLog(@"tsamp: %@", drink.timestamp);
+        details = [drink elapsedTime];
     }
+    
     cell.textLabel.text = label;
-    UILabel *detailView = [[UILabel alloc] initWithFrame:CGRectMake(cell.bounds.origin.x, cell.bounds.origin.y, adjustedWidth, cell.bounds.size.height)];
-    detailView.text = details;
-    detailView.textAlignment = NSTextAlignmentRight;
-    detailView.backgroundColor = [UIColor clearColor];
-    [cell addSubview:detailView];
+    cell.detailTextLabel.text = details;
     
     // Configure the cell...
     
@@ -121,5 +135,24 @@
 {
     TakeADrinkViewController *drinkController = [[TakeADrinkViewController alloc] init];
     [self.navigationController pushViewController:drinkController animated:YES];
+}
+
+- (void)setDrinksArray {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Drink" inManagedObjectContext:self.managedObjectContext];
+    [request setEntity:entity];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortDescriptors];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    NSError *error = nil;
+    NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (mutableFetchResults == nil) {
+        NSLog(@"error");
+    } else {
+        NSLog(@"%@", mutableFetchResults);
+    }
+    self.drinksArray = mutableFetchResults;
 }
 @end

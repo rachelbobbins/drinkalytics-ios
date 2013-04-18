@@ -11,4 +11,5 @@
 @interface TakeADrinkViewController : UITableViewController <UIPickerViewDelegate>
 @property UITextField *detailsField;
 @property UIPickerView *typePicker;
+@property NSManagedObjectContext *managedObjectContext;
 @end
