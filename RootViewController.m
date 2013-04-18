@@ -82,7 +82,7 @@
         } else if (indexPath.row == 1) {
             label = @"Last Drink";
             if ([self.drinksArray count] == 0) {
-                details = @"Get started";
+                details = @"Never :(";
             } else {
                 details = [(Drink *)[self.drinksArray objectAtIndex:0] elapsedTime];
             }

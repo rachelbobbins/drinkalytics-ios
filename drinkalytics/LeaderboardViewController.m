@@ -62,7 +62,7 @@
 {
      UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     if (indexPath.section == 0) {
-        cell.textLabel.text = @"1013 down. 1000 to go.";
+        cell.textLabel.text = @"513 down. 1500 to go.";
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
         
         CGFloat progressWidth = cell.bounds.size.width - 20;
@@ -73,9 +73,8 @@
         UIView *progressBar = [[UIView alloc] initWithFrame:CGRectMake(originX, originY, progressWidth, progressHeight)];
         
         [cell addSubview:progressBar];
-        NSLog(@"%f", originX);
         
-        CGFloat doneWidth = (progressWidth - 30) / 2013 * 1013 ;
+        CGFloat doneWidth = (progressWidth - 30) / 2013 * 513 ;
         UIView *done = [[UIView alloc] initWithFrame:CGRectMake(0, 0, doneWidth, progressHeight)];
         [done setBackgroundColor:[UIColor greenColor]];
         
