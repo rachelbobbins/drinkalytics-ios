@@ -92,13 +92,11 @@
         
     }  else if (indexPath.section == 1) {
         Drink *drink = [self.drinksArray objectAtIndex:indexPath.row];
-        NSLog(@"drink: %@", drink);
         if (drink.details && drink.type) {
             label = [NSString stringWithFormat:@"%@: %@", drink.type, drink.details];
         } else {
             label = drink.type;
         }
-        NSLog(@"tsamp: %@", drink.timestamp);
         details = [drink elapsedTime];
     }
     
@@ -141,18 +139,17 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Drink" inManagedObjectContext:self.managedObjectContext];
     [request setEntity:entity];
+   
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     [request setSortDescriptors:sortDescriptors];
-    [request setReturnsObjectsAsFaults:NO];
+    [request setReturnsObjectsAsFaults:NO]; //otherwise we get lots of faults.
     
     NSError *error = nil;
-    NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    NSMutableArray *mutableFetchResults = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
     if (mutableFetchResults == nil) {
         NSLog(@"error");
-    } else {
-        NSLog(@"%@", mutableFetchResults);
-    }
+    } 
     self.drinksArray = mutableFetchResults;
 }
 @end

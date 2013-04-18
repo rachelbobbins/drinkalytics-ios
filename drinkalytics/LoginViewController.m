@@ -160,17 +160,7 @@
 {
     if (indexPath.section == 1) {
         [self loginViaOlinApps];
-    } else {
-        NSLog(@"%i", indexPath.section);
-    }
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-      {
- *detailViewController = [[; alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    } 
 }
 
 - (void)loginViaOlinApps
@@ -183,15 +173,27 @@
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     NSMutableString *postString = [[NSMutableString alloc]init];
-    [postString appendFormat:@"username=%@", username];
-    [postString appendFormat:@"&password=%@", password];
+    [postString appendFormat:@"username=%@&password=%@", username, password];
     [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
     NSHTTPURLResponse *response;
     NSError *error;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    NSLog(@"data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-    NSLog(@"response: %i", [response statusCode]);
-    [self.navigationController popViewControllerAnimated:YES];
+
+    if ([response statusCode] == 200) {
+        NSError *jsonReadError = nil;
+        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
+        
+        NSString *sessionid = [responseDict objectForKey:@"sessionid"];
+        [[NSUserDefaults standardUserDefaults] setValue:sessionid forKey:@"sessionid"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        UIAlertView *validationMessage = [[UIAlertView alloc] initWithTitle:@"Login Error"
+                                                                    message:@"Use your regular Olin credentials, eg: jsmith, password1!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [validationMessage performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:NO];
+    }
+
 }
 
 

@@ -35,7 +35,6 @@
     mainController.managedObjectContext = context;
     
     [navController pushViewController:mainController animated:NO];
-    
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"sessionid"] == nil) {
         LoginViewController *loginView = [[LoginViewController alloc] init];
         loginView.navigationItem.hidesBackButton = YES;
