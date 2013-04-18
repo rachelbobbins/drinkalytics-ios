@@ -189,7 +189,7 @@
     } else {
         [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] animated:NO];
         UIAlertView *validationMessage = [[UIAlertView alloc] initWithTitle:@"Login Error"
-                                                                    message:@"Use your regular Olin credentials, eg: jsmith, password1!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                                    message:@"Use your regular Olin credentials, eg: jsmith, <password>" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [validationMessage performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:NO];
         
     }
