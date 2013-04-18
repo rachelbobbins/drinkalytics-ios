@@ -72,8 +72,7 @@
         UITextField *textField;
 
         if ([indexPath row] == 0) { //email
-            textField = [[UITextField alloc] initWithFrame:(CGRectMake(cell.bounds.origin.x + 75, cell.bounds.origin.y + 10, cell.bounds.size.width - 75, cell.bounds.size.height - 10))];
-            textField.placeholder = @"john.smith";
+            textField = [[UITextField alloc] initWithFrame:(CGRectMake(cell.bounds.origin.x + 110, cell.bounds.origin.y + 10, cell.bounds.size.width - 110, cell.bounds.size.height - 10))];
             textField.keyboardType = UIKeyboardTypeEmailAddress;
             textField.returnKeyType = UIReturnKeyNext;
             textField.tag = 0;
@@ -81,7 +80,6 @@
         }
         else { //password
             textField = [[UITextField alloc] initWithFrame:(CGRectMake(cell.bounds.origin.x + 110, cell.bounds.origin.y + 10, cell.bounds.size.width - 110.0, cell.bounds.size.height - 10))];
-            textField.placeholder = @"required";
             textField.keyboardType = UIKeyboardTypeDefault;
             textField.returnKeyType = UIReturnKeyDone;
             textField.secureTextEntry = YES;
@@ -102,7 +100,7 @@
     }
     if ([indexPath section] == 0) { // Email & Password Section
         if ([indexPath row] == 0) { // Email
-            cell.textLabel.text = @"Email";
+            cell.textLabel.text = @"Username";
         }
         else {
             cell.textLabel.text = @"Password";
@@ -189,9 +187,11 @@
         
         [self.navigationController popViewControllerAnimated:YES];
     } else {
+        [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] animated:NO];
         UIAlertView *validationMessage = [[UIAlertView alloc] initWithTitle:@"Login Error"
                                                                     message:@"Use your regular Olin credentials, eg: jsmith, password1!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [validationMessage performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:NO];
+        
     }
 
 }

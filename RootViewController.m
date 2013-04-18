@@ -71,8 +71,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UITableViewCell *cell;
-    
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
     NSString *label;
     NSString *details;
@@ -83,7 +81,11 @@
             details = [NSString stringWithFormat:@"%i", [self.drinksArray count]];
         } else if (indexPath.row == 1) {
             label = @"Last Drink";
-            details = [(Drink *)[self.drinksArray objectAtIndex:0] elapsedTime];
+            if ([self.drinksArray count] == 0) {
+                details = @"Get started";
+            } else {
+                details = [(Drink *)[self.drinksArray objectAtIndex:0] elapsedTime];
+            }
         } else {
             label = @"Rank in class";
             details = @"4 of 56";
