@@ -7,6 +7,7 @@
 //
 
 #import "RootViewController.h"
+#import "LeaderboardViewController.h"
 
 @interface RootViewController ()
 
@@ -64,7 +65,7 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     NSString *label;
     NSString *details;
-    UILabel *detailView = [[UILabel alloc] initWithFrame:CGRectMake(cell.bounds.origin.x, cell.bounds.origin.y, cell.bounds.size.width - 20.0, cell.bounds.size.height)];
+    CGFloat adjustedWidth = cell.bounds.size.width - 20.0;
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
@@ -76,11 +77,14 @@
         } else {
             label = @"Rank in class";
             details = @"4 of 56";
+            adjustedWidth = adjustedWidth - 30.0;
+            [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
         }
     }   else {
             label = @"No drinks yet";
     }
     cell.textLabel.text = label;
+    UILabel *detailView = [[UILabel alloc] initWithFrame:CGRectMake(cell.bounds.origin.x, cell.bounds.origin.y, adjustedWidth, cell.bounds.size.height)];
     detailView.text = details;
     detailView.textAlignment = NSTextAlignmentRight;
     detailView.backgroundColor = [UIColor clearColor];
@@ -105,15 +109,11 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (void) tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    [self.navigationController pushViewController:[[LeaderboardViewController alloc] init] animated:YES];
 }
 
 @end
