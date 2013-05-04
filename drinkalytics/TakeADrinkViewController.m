@@ -9,6 +9,7 @@
 #import "TakeADrinkViewController.h"
 #import "Drink.h"
 #import "DrinkAppDelegate.h"
+#import "DrinkPickerView.h"
 
 @interface TakeADrinkViewController ()
 
@@ -22,7 +23,9 @@
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         self.managedObjectContext = [(DrinkAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    }
+        DrinkPickerView *typePickerView = [[DrinkPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        [self setTypePickerView:typePickerView];
+   }
     return self;
 }
 
@@ -37,6 +40,13 @@
     self.navigationItem.rightBarButtonItem = saveButton;
 }
 
+- (void)viewDidLayoutSubviews{
+    NSString *displayedType = [[[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textLabel]text];
+    if (![self.typePickerView.selectedDrinkType isEqualToString:displayedType]) {
+        [self.tableView reloadData];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -44,7 +54,7 @@
 }
 - (void)saveDrink
 {
-    NSString *type = [[Drink types] objectAtIndex:[self.typePicker selectedRowInComponent:0]];
+    NSString *type = [[[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textLabel]text];
     NSString *details = self.detailsField.text;
 
     Drink *drink = (Drink *)[NSEntityDescription insertNewObjectForEntityForName:@"Drink"
@@ -72,16 +82,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
     
     if (indexPath.section == 0) {
-        UIPickerView *myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(10, 0, 300, 210)];
-        myPickerView.delegate = self;
-        myPickerView.showsSelectionIndicator = YES;
-        
-        [cell addSubview:myPickerView];
-        [cell setBackgroundColor:[UIColor clearColor]];
-        self.typePicker = myPickerView;
+        [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
+        NSString *drinkType = self.typePickerView.selectedDrinkType;
+        cell.textLabel.text = drinkType;
 
     } else if (indexPath.section == 1) {
         self.detailsField = [[UITextField alloc] initWithFrame:CGRectMake(20, 10, cell.bounds.size.width, cell.bounds.size.height)];
@@ -95,12 +105,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.section) {
-        case 0:
-            return 170;
-        default:
-            return 44.0;;
-    }
+    return 44.0;
 
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -114,62 +119,13 @@
     }
 }
 
-#pragma mark - UIPickerView Delegate
-// tell the picker how many rows are available for a given component
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return [[Drink types] count];
-}
 
-// tell the picker how many components it will have
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
-}
-
-// tell the picker the title for a given component
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    NSString *title = [[Drink types] objectAtIndex:row];
-    
-    return title;
-}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+//    [self.view.s
+    [self.view addSubview:self.typePickerView];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 

@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DrinkPickerView.h"
 
-@interface TakeADrinkViewController : UITableViewController <UIPickerViewDelegate>
+@interface TakeADrinkViewController : UITableViewController 
 @property UITextField *detailsField;
-@property UIPickerView *typePicker;
+@property DrinkPickerView *typePickerView;
 @property NSManagedObjectContext *managedObjectContext;
 @end

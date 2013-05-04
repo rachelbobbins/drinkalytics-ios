@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A30E5301735AC5E001DC405 /* DrinkPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A30E52F1735AC5E001DC405 /* DrinkPickerView.m */; };
 		5AD52263171F1B9A002D2A3F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD52262171F1B9A002D2A3F /* UIKit.framework */; };
 		5AD52265171F1B9A002D2A3F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD52264171F1B9A002D2A3F /* Foundation.framework */; };
 		5AD52267171F1B9A002D2A3F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD52266171F1B9A002D2A3F /* CoreGraphics.framework */; };
@@ -26,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5A30E52E1735AC5E001DC405 /* DrinkPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrinkPickerView.h; sourceTree = "<group>"; };
+		5A30E52F1735AC5E001DC405 /* DrinkPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrinkPickerView.m; sourceTree = "<group>"; };
 		5AD5225E171F1B9A002D2A3F /* drinkalytics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = drinkalytics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AD52262171F1B9A002D2A3F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5AD52264171F1B9A002D2A3F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -99,6 +102,8 @@
 		5AD5226A171F1B9A002D2A3F /* drinkalytics */ = {
 			isa = PBXGroup;
 			children = (
+				5A30E52E1735AC5E001DC405 /* DrinkPickerView.h */,
+				5A30E52F1735AC5E001DC405 /* DrinkPickerView.m */,
 				5AD522B0171F9F93002D2A3F /* Drink.h */,
 				5AD522B1171F9F93002D2A3F /* Drink.m */,
 				5AD52293171F5955002D2A3F /* RootViewController.h */,
@@ -205,6 +210,7 @@
 				5AD52298171F603A002D2A3F /* LeaderboardViewController.m in Sources */,
 				5AD522A4171F832A002D2A3F /* TakeADrinkViewController.m in Sources */,
 				5AD522B2171F9F93002D2A3F /* Drink.m in Sources */,
+				5A30E5301735AC5E001DC405 /* DrinkPickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
