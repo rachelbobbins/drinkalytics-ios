@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5A30E5301735AC5E001DC405 /* DrinkPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A30E52F1735AC5E001DC405 /* DrinkPickerView.m */; };
+		5A8F801B1737483A0072756F /* HTTPController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8F801A1737483A0072756F /* HTTPController.m */; };
 		5AD52263171F1B9A002D2A3F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD52262171F1B9A002D2A3F /* UIKit.framework */; };
 		5AD52265171F1B9A002D2A3F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD52264171F1B9A002D2A3F /* Foundation.framework */; };
 		5AD52267171F1B9A002D2A3F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD52266171F1B9A002D2A3F /* CoreGraphics.framework */; };
@@ -29,6 +30,8 @@
 /* Begin PBXFileReference section */
 		5A30E52E1735AC5E001DC405 /* DrinkPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrinkPickerView.h; sourceTree = "<group>"; };
 		5A30E52F1735AC5E001DC405 /* DrinkPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrinkPickerView.m; sourceTree = "<group>"; };
+		5A8F80191737483A0072756F /* HTTPController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPController.h; sourceTree = "<group>"; };
+		5A8F801A1737483A0072756F /* HTTPController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPController.m; sourceTree = "<group>"; };
 		5AD5225E171F1B9A002D2A3F /* drinkalytics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = drinkalytics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AD52262171F1B9A002D2A3F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5AD52264171F1B9A002D2A3F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -114,6 +117,8 @@
 				5AD522A3171F832A002D2A3F /* TakeADrinkViewController.m */,
 				5AD5228D171F2439002D2A3F /* LoginViewController.h */,
 				5AD5228E171F2439002D2A3F /* LoginViewController.m */,
+				5A8F80191737483A0072756F /* HTTPController.h */,
+				5A8F801A1737483A0072756F /* HTTPController.m */,
 				5AD52273171F1B9A002D2A3F /* DrinkAppDelegate.h */,
 				5AD52274171F1B9A002D2A3F /* DrinkAppDelegate.m */,
 				5AD5227C171F1B9A002D2A3F /* drinkalytics.xcdatamodeld */,
@@ -211,6 +216,7 @@
 				5AD522A4171F832A002D2A3F /* TakeADrinkViewController.m in Sources */,
 				5AD522B2171F9F93002D2A3F /* Drink.m in Sources */,
 				5A30E5301735AC5E001DC405 /* DrinkPickerView.m in Sources */,
+				5A8F801B1737483A0072756F /* HTTPController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginViewController : UITableViewController
+@interface LoginViewController : UITableViewController <NSURLConnectionDelegate>
 @property UITextField *nameField;
 @property UITextField *passwordField;
+@property NSURLConnection *urlConnection;
 
 @end

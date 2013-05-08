@@ -10,6 +10,7 @@
 #import "Drink.h"
 #import "DrinkAppDelegate.h"
 #import "DrinkPickerView.h"
+#import "HTTPController.h"
 
 @interface TakeADrinkViewController ()
 
@@ -66,6 +67,10 @@
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"Error saving drink");
     }
+    
+    HTTPController *httpController = [[HTTPController alloc] init];
+    [httpController getEveryonesDrinks];
+//    [httpController postDrinkWithType:type andDetails:details];
     [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark - Table view data source

@@ -13,6 +13,7 @@
 @end
 
 @implementation LoginViewController 
+@synthesize urlConnection = _urlConnection;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -113,44 +114,6 @@
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -176,13 +139,18 @@
     NSHTTPURLResponse *response;
     NSError *error;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+//    _urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+//    [_urlConnection start];
 
     if ([response statusCode] == 200) {
         NSError *jsonReadError = nil;
         NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
-        
+        NSLog(@"%@", responseDict);
         NSString *sessionid = [responseDict objectForKey:@"sessionid"];
+        NSString *userid = [responseDict objectForKey:@"id"];
+        
         [[NSUserDefaults standardUserDefaults] setValue:sessionid forKey:@"sessionid"];
+        [[NSUserDefaults standardUserDefaults] setValue:userid forKey:@"userid"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         [self.navigationController popViewControllerAnimated:YES];
@@ -195,6 +163,26 @@
     }
 
 }
+
+//- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+//    [_responseData appendData:data];
+//}
+//
+//- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+//    //Oops! handle failure here
+//}
+//
+//- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+//    if (_statusCode >= 200 && _statusCode < 400) {
+//        //Things look ok
+//        NSString *responseString = [[[NSString alloc] initWithData:_responseData] autorelease];
+//        //Send this to an xml lib and parse
+//    }
+//    
+//    [_responseData release];
+//    _responseData = nil;
+//    [connection autorelease];
+//}
 
 
 @end
