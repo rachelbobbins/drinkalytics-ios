@@ -7,6 +7,7 @@
 //
 
 #import "HTTPController.h"
+#import "Person.h"
 
 @implementation HTTPController
 - (void)postDrinkWithType:(NSString *)name andDetails:(NSString *)detail
@@ -47,22 +48,12 @@
             NSString *nameId = [(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"id"];
             NSString *rank = [[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] stringValue];
             
-            //name is returned as a first.last, change it to First Last
-//            NSArray *nameParts = [nameId componentsSeparatedByString:@"."];
-//            NSMutableString *realName = [[NSMutableString alloc] init];
-//            
-//            for (int j=0; j < [nameParts count]; j ++) {
-//                NSString *part = (NSString *)[nameParts objectAtIndex:j];
-//                part = [part stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[part substringToIndex:1] uppercaseString]];
-//                [realName appendString:part];
-//                [realName appendString:@" "];
-//            }
-            
-//            NSString *drinks = [(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"drinks"];
-//           NSLog(@"%@", [[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] class]);
-            
-//            [rankings setValue:realName forKey:rank];
-            [rankings setValue:nameId forKey:rank];
+            Person *person = [[Person alloc] init];
+            [person setUserId:nameId];
+            [person setRank:[[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] integerValue]];
+            [person setNumberOfDrinks:[[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"drinks"] integerValue]];
+
+            [rankings setObject:person forKey:rank];
         }
     }
     return rankings;

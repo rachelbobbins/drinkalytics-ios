@@ -7,6 +7,7 @@
 //
 
 #import "LeaderboardViewController.h"
+#import "Person.h"
 
 @interface LeaderboardViewController ()
 
@@ -55,14 +56,24 @@
             return 1;
         case 1:
             return [self.rankings count];
+        default:
+            return 0;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+     UITableViewCell *cell;
     if (indexPath.section == 0) {
-        cell.textLabel.text = @"513 down. 1500 to go.";
+        NSInteger totalDrinks = 0;
+        for (Person *person in [self.rankings allValues]) {
+            totalDrinks = totalDrinks + person.numberOfDrinks;
+            NSLog(@"person: %@, number of drinks: %i", person.userId, person.numberOfDrinks);
+            NSLog(@"total drinks: %i", totalDrinks);
+        }
+        int remainingDrinks = 2013 - totalDrinks;
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        cell.textLabel.text = [NSString stringWithFormat:@"%i down. %i to go.", totalDrinks, remainingDrinks];
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
         
         CGFloat progressWidth = cell.bounds.size.width - 20;
@@ -74,7 +85,7 @@
         
         [cell addSubview:progressBar];
         
-        CGFloat doneWidth = (progressWidth - 30) / 2013 * 513 ;
+        CGFloat doneWidth = (progressWidth - 30) / 2013 * totalDrinks ;
         UIView *done = [[UIView alloc] initWithFrame:CGRectMake(0, 0, doneWidth, progressHeight)];
         [done setBackgroundColor:[UIColor greenColor]];
         
@@ -87,10 +98,12 @@
         [cell setBackgroundColor:[UIColor clearColor]];
         [cell setBackgroundView:progressBar];
     } else {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
         NSString *rank = [NSString stringWithFormat:@"%i", (indexPath.row + 1)];
-        NSString *name = [self.rankings valueForKey:rank];
+        Person *person = (Person *)[self.rankings objectForKey:rank];
 
-        cell.textLabel.text = name;
+        cell.textLabel.text = person.userId;
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", person.numberOfDrinks];
     }
     
     return cell;

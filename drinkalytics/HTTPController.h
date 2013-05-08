@@ -14,5 +14,4 @@
 - (void)getEveryonesDrinks;
 - (BOOL)loginWithUsername:(NSString *)username andPassword:(NSString *)password;
 @property NSMutableData *responseData;
-//NSMutableData *_responseData;
 @end
