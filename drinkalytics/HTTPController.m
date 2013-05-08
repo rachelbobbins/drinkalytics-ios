@@ -19,7 +19,7 @@
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     NSMutableString *postString = [[NSMutableString alloc]init];
-    [postString appendFormat:@"user=%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"userid"]];
+//    [postString appendFormat:@"user=%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"userid"]];
 //    [postString appendFormat:@"&sessionid=%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"sessionid"]];
     [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
     NSHTTPURLResponse *response;
@@ -35,6 +35,56 @@
     }
 }
 
+- (BOOL)loginWithUsername:(NSString *)username andPassword:(NSString *)password
+{
+    //obtain session cookie
+    NSURL *url = [[NSURL alloc] initWithString:@"https://olinapps.herokuapp.com/api/exchangelogin"];
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    NSMutableString *postString = [[NSMutableString alloc]init];
+    [postString appendFormat:@"username=%@&password=%@", username, password];
+    [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
+    NSHTTPURLResponse *response;
+    NSError *error;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    
+    if ([response statusCode] == 200) {
+        //give drinkalytics permission to use the session cookie
+        NSError *jsonReadError = nil;
+        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
+        NSString *sessionid = [responseDict objectForKey:@"sessionid"];
+        
+        NSURL *newurl = [[NSURL alloc] initWithString:@"http://drinkalytics.herokuapp.com/login"];
+        NSMutableURLRequest *newrequest = [NSMutableURLRequest requestWithURL:newurl];
+        [newrequest setHTTPMethod:@"POST"];
+        [newrequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        
+        NSMutableString *newpostString = [[NSMutableString alloc]init];
+        [newpostString appendFormat:@"sessionid=%@",sessionid];
+        [newrequest setHTTPBody:[newpostString dataUsingEncoding:NSUTF8StringEncoding]];
+        NSHTTPURLResponse *response;
+        NSError *error;
+        (void)[NSURLConnection sendSynchronousRequest:newrequest returningResponse:&response error:&error];
+
+        //save the session cookie
+        NSArray *keys = [[NSArray alloc] initWithObjects:@"sessionid", @"username", nil];
+        NSArray * values = [[NSArray alloc] initWithObjects:sessionid, username, nil];
+
+        NSHTTPCookie *cookie = [[NSHTTPCookie alloc] initWithProperties:[[NSDictionary alloc] initWithObjects:values forKeys:keys]];
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+        return YES;
+    } else {
+        return NO;
+    }
+    
+//    NSURLConnection *conn = [[NSURLConnection alloc] init];
+//    (void)[conn initWithRequest:request delegate:self];
+
+}
+
 - (void)getEveryonesDrinks
 {
 //    NSURL *url = [[NSURL alloc] initWithString:@"http://localhost:3000/api/drinks"];
@@ -46,25 +96,10 @@
     NSMutableString *postString = [[NSMutableString alloc]init];
 //    [postString appendFormat:@"user=%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"userid"]];
     [postString appendFormat:@"sessionID=%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"sessionid"]];
-//    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"sessionid"]);
-//    [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
-    
-//    NSHTTPURLResponse *response;
-//    NSError *error;
+
     NSURLConnection *conn = [[NSURLConnection alloc] init];
+//    [self setC]
     (void)[conn initWithRequest:request delegate:self];
-//    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    //
-//    if ([response statusCode] == 200) {
-//        NSError *jsonReadError = nil;
-//        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
-//        NSLog(@"status: good %@", responseDict);
-//        NSLog(@"status: good %@", data);
-//    } else {
-//        NSLog(@"error: %@", response);
-//        NSLog(@"response status: %i", [response statusCode]);
-//        NSLog(@"nserror: %@", error);
-//    }
 }
 
 #pragma mark NSURLConnection Delegate Methods
@@ -81,7 +116,6 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
         // Append the new data to the instance variable you declared
         [_responseData appendData:data];
-    NSLog(@"connection did receive data: %@", data);
 }
     
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection
