@@ -9,6 +9,7 @@
 #import "RootViewController.h"
 #import "LeaderboardViewController.h"
 #import "TakeADrinkViewController.h"
+#import "HTTPController.h"
 #import "Drink.h"
 
 @interface RootViewController ()
@@ -127,8 +128,12 @@
 
 - (void) tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
+    HTTPController *http = [[HTTPController alloc] init];
+    NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[http getRankings]] ;
     
-    [self.navigationController pushViewController:[[LeaderboardViewController alloc] init] animated:YES];
+    LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
+    [lvc setRankings:rankings];
+    [self.navigationController pushViewController:lvc animated:YES];
 }
 
 - (void) takeDrink

@@ -19,6 +19,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
+    
+    NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:@"savedCookies"];
+    if([cookiesdata length]) {
+        NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookiesdata];
+        NSHTTPCookie *cookie;
+        
+        for (cookie in cookies) {
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+        }
+    }
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
@@ -36,7 +47,7 @@
     mainController.managedObjectContext = context;
     
     [navController pushViewController:mainController animated:NO];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"sessionid"] == nil) {
+    if ([[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] count] == 0) {
         LoginViewController *loginView = [[LoginViewController alloc] init];
         loginView.navigationItem.hidesBackButton = YES;
         [navController pushViewController:loginView animated:NO];

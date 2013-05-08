@@ -69,8 +69,7 @@
     }
     
     HTTPController *httpController = [[HTTPController alloc] init];
-    [httpController getEveryonesDrinks];
-//    [httpController postDrinkWithType:type andDetails:details];
+    [httpController postDrinkWithType:type andDetails:details];
     [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark - Table view data source

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LeaderboardViewController : UITableViewController
-
+@property NSDictionary *rankings;
 @end

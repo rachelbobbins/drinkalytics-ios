@@ -54,7 +54,7 @@
         case 0:
             return 1;
         case 1:
-            return 80;
+            return [self.rankings count];
     }
 }
 
@@ -86,6 +86,11 @@
         
         [cell setBackgroundColor:[UIColor clearColor]];
         [cell setBackgroundView:progressBar];
+    } else {
+        NSString *rank = [NSString stringWithFormat:@"%i", (indexPath.row + 1)];
+        NSString *name = [self.rankings valueForKey:rank];
+
+        cell.textLabel.text = name;
     }
     
     return cell;

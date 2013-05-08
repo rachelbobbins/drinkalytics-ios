@@ -12,27 +12,61 @@
 - (void)postDrinkWithType:(NSString *)name andDetails:(NSString *)detail
 {
     //posts a drink
-    NSURL *url = [[NSURL alloc] initWithString:@"http://drinkalytics.herokuapp.com/api/drinks/liquor"];
-//    NSURL *url = [[NSURL alloc] initWithString:@"http://localhost:3000/api/drinks/liquor"];
+    NSURL *url = [[NSURL alloc] initWithString:@"http://drinkalytics.herokuapp.com/api/drinks"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     NSMutableString *postString = [[NSMutableString alloc]init];
-//    [postString appendFormat:@"user=%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"userid"]];
-//    [postString appendFormat:@"&sessionid=%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"sessionid"]];
+    [postString appendFormat:@"drink=%@", name];
     [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
+
+    NSURLConnection *conn = [[NSURLConnection alloc] init];
+    (void)[conn initWithRequest:request delegate:self];
+
+}
+
+- (NSDictionary *)getRankings
+{
+    NSURL *url = [[NSURL alloc] initWithString:@"http://drinkalytics.herokuapp.com/api/rankings"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
     NSHTTPURLResponse *response;
     NSError *error;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-//
+    
+    NSMutableDictionary *rankings = [[NSMutableDictionary alloc] init];
     if ([response statusCode] == 200) {
+        //give drinkalytics permission to use the session cookie
         NSError *jsonReadError = nil;
-        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
-        NSLog(@"status: good %@", responseDict);
-    } else {
-        NSLog(@"error: %@", response);     
+        NSArray *responseArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
+        
+        for (int i=0; i < [responseArray count]; i++) {
+            NSString *nameId = [(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"id"];
+            NSString *rank = [[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] stringValue];
+            
+            //name is returned as a first.last, change it to First Last
+//            NSArray *nameParts = [nameId componentsSeparatedByString:@"."];
+//            NSMutableString *realName = [[NSMutableString alloc] init];
+//            
+//            for (int j=0; j < [nameParts count]; j ++) {
+//                NSString *part = (NSString *)[nameParts objectAtIndex:j];
+//                part = [part stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[part substringToIndex:1] uppercaseString]];
+//                [realName appendString:part];
+//                [realName appendString:@" "];
+//            }
+            
+//            NSString *drinks = [(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"drinks"];
+//           NSLog(@"%@", [[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] class]);
+            
+//            [rankings setValue:realName forKey:rank];
+            [rankings setValue:nameId forKey:rank];
+        }
     }
+    return rankings;
+
 }
 
 - (BOOL)loginWithUsername:(NSString *)username andPassword:(NSString *)password
@@ -49,6 +83,7 @@
     [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
     NSHTTPURLResponse *response;
     NSError *error;
+    
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
     if ([response statusCode] == 200) {
@@ -68,20 +103,25 @@
         NSHTTPURLResponse *response;
         NSError *error;
         (void)[NSURLConnection sendSynchronousRequest:newrequest returningResponse:&response error:&error];
-
+        
+        NSLog(@"response: %i", [response statusCode]);
         //save the session cookie
         NSArray *keys = [[NSArray alloc] initWithObjects:@"sessionid", @"username", nil];
         NSArray * values = [[NSArray alloc] initWithObjects:sessionid, username, nil];
-
-        NSHTTPCookie *cookie = [[NSHTTPCookie alloc] initWithProperties:[[NSDictionary alloc] initWithObjects:values forKeys:keys]];
+        NSDictionary *properties = [[NSDictionary alloc] initWithObjects:values forKeys:keys];
+        NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:properties];
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+        
+        //save cookie for next time so user doesn't have to log in again.
+        [[NSUserDefaults standardUserDefaults] setValue:
+         [NSKeyedArchiver archivedDataWithRootObject:[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]]
+                                                 forKey:@"savedCookies"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+
         return YES;
     } else {
         return NO;
     }
-    
-//    NSURLConnection *conn = [[NSURLConnection alloc] init];
-//    (void)[conn initWithRequest:request delegate:self];
 
 }
 

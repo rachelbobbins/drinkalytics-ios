@@ -25,6 +25,7 @@
 		5AD52298171F603A002D2A3F /* LeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD52297171F603A002D2A3F /* LeaderboardViewController.m */; };
 		5AD522A4171F832A002D2A3F /* TakeADrinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD522A3171F832A002D2A3F /* TakeADrinkViewController.m */; };
 		5AD522B2171F9F93002D2A3F /* Drink.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD522B1171F9F93002D2A3F /* Drink.m */; };
+		5ADA22BC173B129D0013A143 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADA22BB173B129D0013A143 /* Person.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,8 @@
 		5AD522A3171F832A002D2A3F /* TakeADrinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TakeADrinkViewController.m; sourceTree = "<group>"; };
 		5AD522B0171F9F93002D2A3F /* Drink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Drink.h; path = ../Drink.h; sourceTree = "<group>"; };
 		5AD522B1171F9F93002D2A3F /* Drink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Drink.m; path = ../Drink.m; sourceTree = "<group>"; };
+		5ADA22BA173B129D0013A143 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		5ADA22BB173B129D0013A143 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +122,8 @@
 				5AD5228E171F2439002D2A3F /* LoginViewController.m */,
 				5A8F80191737483A0072756F /* HTTPController.h */,
 				5A8F801A1737483A0072756F /* HTTPController.m */,
+				5ADA22BA173B129D0013A143 /* Person.h */,
+				5ADA22BB173B129D0013A143 /* Person.m */,
 				5AD52273171F1B9A002D2A3F /* DrinkAppDelegate.h */,
 				5AD52274171F1B9A002D2A3F /* DrinkAppDelegate.m */,
 				5AD5227C171F1B9A002D2A3F /* drinkalytics.xcdatamodeld */,
@@ -217,6 +222,7 @@
 				5AD522B2171F9F93002D2A3F /* Drink.m in Sources */,
 				5A30E5301735AC5E001DC405 /* DrinkPickerView.m in Sources */,
 				5A8F801B1737483A0072756F /* HTTPController.m in Sources */,
+				5ADA22BC173B129D0013A143 /* Person.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

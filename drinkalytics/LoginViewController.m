@@ -134,42 +134,13 @@
     if ([http loginWithUsername:username andPassword:password])
     {
         [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] animated:NO];
+        UIAlertView *validationMessage = [[UIAlertView alloc] initWithTitle:@"Login Error"
+                                    message:@"Use your regular Olin credentials, eg: jsmith, <password>" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [validationMessage performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:NO];
     }
-        ;
-    
-//    NSURL *url = [[NSURL alloc] initWithString:@"https://olinapps.herokuapp.com/api/exchangelogin"];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:@"POST"];
-//    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-//    
-//    NSMutableString *postString = [[NSMutableString alloc]init];
-//    [postString appendFormat:@"username=%@&password=%@", username, password];
-//    [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
-//    NSHTTPURLResponse *response;
-//    NSError *error;
-//    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-//    _urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-//    [_urlConnection start];
 
-//    if ([response statusCode] == 200) {
-//        NSError *jsonReadError = nil;
-//        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
-//        NSLog(@"%@", responseDict);
-//        NSString *sessionid = [responseDict objectForKey:@"sessionid"];
-//        NSString *userid = [responseDict objectForKey:@"id"];
-//        
-//        [[NSUserDefaults standardUserDefaults] setValue:sessionid forKey:@"sessionid"];
-//        [[NSUserDefaults standardUserDefaults] setValue:userid forKey:@"userid"];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-//        
-//        [self.navigationController popViewControllerAnimated:YES];
-//    } else {
-//        [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] animated:NO];
-//        UIAlertView *validationMessage = [[UIAlertView alloc] initWithTitle:@"Login Error"
-//                                                                    message:@"Use your regular Olin credentials, eg: jsmith, <password>" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        [validationMessage performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:NO];
-//        
-//    }
 
 }
 
