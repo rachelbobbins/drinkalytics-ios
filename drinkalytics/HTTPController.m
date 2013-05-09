@@ -35,32 +35,18 @@
 
 - (NSDictionary *)getRankings
 {
-    NSURL *url = [[NSURL alloc] initWithString:@"http://drinkalytics.herokuapp.com/api/rankings"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"GET"];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    NSHTTPURLResponse *response;
-    NSError *error;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    
+    NSArray *responseArray = [self api_rankings];
     NSMutableDictionary *rankings = [[NSMutableDictionary alloc] init];
-    if ([response statusCode] == 200) {
-        //give drinkalytics permission to use the session cookie
-        NSError *jsonReadError = nil;
-        NSArray *responseArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
+    for (int i=0; i < [responseArray count]; i++) {
+        NSString *nameId = [(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"id"];
+        NSString *rank = [[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] stringValue];
         
-        for (int i=0; i < [responseArray count]; i++) {
-            NSString *nameId = [(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"id"];
-            NSString *rank = [[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] stringValue];
-            
-            Person *person = [[Person alloc] init];
-            [person setUserId:nameId];
-            [person setRank:[[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] integerValue]];
-            [person setNumberOfDrinks:[[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"drinks"] integerValue]];
+        Person *person = [[Person alloc] init];
+        [person setUserId:nameId];
+        [person setRank:[[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] integerValue]];
+        [person setNumberOfDrinks:[[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"drinks"] integerValue]];
 
-            [rankings setObject:person forKey:rank];
-        }
+        [rankings setObject:person forKey:rank];
     }
     return rankings;
 
@@ -162,6 +148,22 @@
 
 - (NSInteger)getMyRank
 {
+    NSArray *responseArray = [self api_rankings];
+    
+    for (int i=0; i < [responseArray count]; i++) {
+        NSString *nameId = [(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"id"];
+        NSInteger rank = [[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] integerValue];
+        
+        if ([nameId isEqualToString:[[NSUserDefaults standardUserDefaults] valueForKey:@"userid"]]) {
+            return rank;
+        }
+    }
+
+    return 100000;
+}
+
+- (NSArray *)api_rankings
+{
     NSURL *url = [[NSURL alloc] initWithString:@"http://drinkalytics.herokuapp.com/api/rankings"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
@@ -170,37 +172,15 @@
     NSHTTPURLResponse *response;
     NSError *error;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    
     if ([response statusCode] == 200) {
-        //give drinkalytics permission to use the session cookie
         NSError *jsonReadError = nil;
         NSArray *responseArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
-        
-        for (int i=0; i < [responseArray count]; i++) {
-            NSString *nameId = [(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"id"];
-            NSInteger rank = [[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] integerValue];
-            
-            if ([nameId isEqualToString:[[NSUserDefaults standardUserDefaults] valueForKey:@"userid"]]) {
-                return rank;
-            }
-        }
-
+        return responseArray;
+    } else {
+        NSLog(@"error: %i, %@", [response statusCode], error);
     }
 
 }
-//- (void)getEveryonesDrinks
-//{
-//    NSURL *url = [[NSURL alloc] initWithString:@"http://drinkalytics.herokuapp.com/api/drinks"];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:@"GET"];
-//    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-//    
-//    NSMutableString *postString = [[NSMutableString alloc]init];
-//    [postString appendFormat:@"sessionID=%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"sessionid"]];
-//
-//    NSURLConnection *conn = [[NSURLConnection alloc] init];
-//    (void)[conn initWithRequest:request delegate:self];
-//}
 
 
     

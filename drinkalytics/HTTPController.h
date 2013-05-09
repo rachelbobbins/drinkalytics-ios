@@ -12,7 +12,6 @@
 - (void)postDrinkWithType:(NSString *)name andDetails:(NSString *)detail;
 - (NSDictionary *)getRankings;
 - (NSArray *)getMyDrinks:(NSString *)userId;
-- (void)getEveryonesDrinks;
 - (NSInteger)getMyRank;
 - (BOOL)loginWithUsername:(NSString *)username andPassword:(NSString *)password;
 @property NSMutableData *responseData;
