@@ -12,5 +12,5 @@
 @interface TakeADrinkViewController : UITableViewController 
 @property UITextField *detailsField;
 @property DrinkPickerView *typePickerView;
-@property NSManagedObjectContext *managedObjectContext;
+//@property NSManagedObjectContext *managedObjectContext;
 @end

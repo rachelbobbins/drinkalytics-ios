@@ -23,7 +23,6 @@
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        self.managedObjectContext = [(DrinkAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
         DrinkPickerView *typePickerView = [[DrinkPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         [self setTypePickerView:typePickerView];
    }
@@ -58,16 +57,6 @@
     NSString *type = [[[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textLabel]text];
     NSString *details = self.detailsField.text;
 
-//    Drink *drink = (Drink *)[NSEntityDescription insertNewObjectForEntityForName:@"Drink"
-//                                                          inManagedObjectContext:self.managedObjectContext];
-//    [drink setDetails:details];
-//    [drink setType:type];
-//    [drink setTimestamp:[NSDate date]];
-//    NSError *error = nil;
-//    if (![self.managedObjectContext save:&error]) {
-//        NSLog(@"Error saving drink");
-//    }
-//    
     HTTPController *httpController = [[HTTPController alloc] init];
     [httpController postDrinkWithType:type andDetails:details];
     [self.navigationController popViewControllerAnimated:YES];
@@ -126,7 +115,6 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-//    [self.view.s
     [self.view addSubview:self.typePickerView];
 }
 

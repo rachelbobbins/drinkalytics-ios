@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 bobbypins. All rights reserved.
 //
 
-#import <CoreData/CoreData.h>
+#import <Foundation/Foundation.h>
 
-@interface Drink : NSManagedObject
+@interface Drink : NSObject
 + (NSArray *)types;
 - (NSString *)elapsedTime;
 

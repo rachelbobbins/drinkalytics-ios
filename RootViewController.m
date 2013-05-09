@@ -18,7 +18,6 @@
 
 @implementation RootViewController
 @synthesize drinksArray;
-//@synthesize managedObjectContext;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -105,8 +104,6 @@
     
     cell.textLabel.text = label;
     cell.detailTextLabel.text = details;
-    
-    // Configure the cell...
     
     return cell;
 }
