@@ -133,6 +133,7 @@
     
     LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
     [lvc setRankings:rankings];
+    [lvc setSeniorMode:YES];
     [self.navigationController pushViewController:lvc animated:YES];
 }
 

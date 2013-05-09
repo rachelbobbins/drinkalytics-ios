@@ -10,4 +10,5 @@
 
 @interface LeaderboardViewController : UITableViewController
 @property NSDictionary *rankings;
+@property BOOL seniorMode;
 @end

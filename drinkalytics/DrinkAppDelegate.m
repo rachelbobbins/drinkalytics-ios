@@ -9,8 +9,8 @@
 #import "DrinkAppDelegate.h"
 #import "RootViewController.h"
 #import "LoginViewController.h"
-#import "HTTPController.h"
 #import "LeaderboardViewController.h"
+#import "HTTPController.h"
 
 @implementation DrinkAppDelegate
 
@@ -20,7 +20,7 @@
     //fetch cookies, so that we don't have to authenticate again to the api.
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
     NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:@"savedCookies"];
-    if([cookiesdata length]) {
+    if([cookiesdata length] > 0) {
         NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookiesdata];
         NSHTTPCookie *cookie;
         
@@ -34,25 +34,25 @@
     
     UINavigationController *navController = [[UINavigationController alloc]init];
     
-    RootViewController *mainController = [[RootViewController alloc] init];
-    [navController pushViewController:mainController animated:NO];
-    
     if ([[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] count] == 0) {
+        RootViewController *mainController = [[RootViewController alloc] init];
+        [navController pushViewController:mainController animated:NO];
+        
         LoginViewController *loginView = [[LoginViewController alloc] init];
         loginView.navigationItem.hidesBackButton = YES;
         [navController pushViewController:loginView animated:NO];
+    } else {
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"userIsSenior"]) {
+            HTTPController *http = [[HTTPController alloc] init];
+            NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[http getRankings]] ;
+            
+            LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
+            [lvc setRankings:rankings];
+            [lvc setSeniorMode:YES];
+            [navController pushViewController:lvc animated:YES];
+        }
     }
     
-    HTTPController *httpController = [[HTTPController alloc] init];
-    if (![httpController userIsSenior])
-    {
-        
-        NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[httpController getRankings]] ;
-        LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
-        [lvc setRankings:rankings];
-        lvc.navigationItem.hidesBackButton = YES;
-        [navController pushViewController:lvc animated:YES];
-    }
     
     self.window.rootViewController = navController;
     [self.window makeKeyAndVisible];

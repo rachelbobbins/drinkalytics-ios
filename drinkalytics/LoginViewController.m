@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "HTTPController.h"
+#import "LeaderboardViewController.h"
 
 @interface LoginViewController ()
 
@@ -133,7 +134,20 @@
     HTTPController *http = [[HTTPController alloc] init];
     if ([http loginWithUsername:username andPassword:password])
     {
-        [self.navigationController popViewControllerAnimated:YES];
+        HTTPController *httpController = [[HTTPController alloc] init];
+        if (![httpController userIsSenior])
+        {
+            NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[httpController getRankings]] ;
+            LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
+            [lvc setRankings:rankings];
+            [lvc setSeniorMode:NO];
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"userIsSenior"];
+            lvc.navigationItem.hidesBackButton = YES;
+            [self.navigationController pushViewController:lvc animated:YES];
+        } else {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userIsSenior"];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     } else {
         [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] animated:NO];
         UIAlertView *validationMessage = [[UIAlertView alloc] initWithTitle:@"Login Error"

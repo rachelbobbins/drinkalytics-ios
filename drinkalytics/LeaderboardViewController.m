@@ -32,7 +32,11 @@
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    [self.navigationItem setTitle:@"Leaderboard"];
+    if (self.seniorMode) {
+        [self.navigationItem setTitle:@"Leaderboard"];
+    } else {
+        [self.navigationItem setTitle:@"This could be you next year!"];
+    }
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
