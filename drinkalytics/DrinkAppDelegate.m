@@ -50,6 +50,9 @@
             [lvc setRankings:rankings];
             [lvc setSeniorMode:YES];
             [navController pushViewController:lvc animated:YES];
+        } else {
+            RootViewController *mainController = [[RootViewController alloc] init];
+            [navController pushViewController:mainController animated:NO];
         }
     }
     

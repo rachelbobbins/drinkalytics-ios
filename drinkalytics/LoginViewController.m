@@ -134,13 +134,14 @@
     HTTPController *http = [[HTTPController alloc] init];
     if ([http loginWithUsername:username andPassword:password])
     {
-        HTTPController *httpController = [[HTTPController alloc] init];
-        if (![httpController userIsSenior])
+        if (![http userIsSenior])
         {
-            NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[httpController getRankings]] ;
+            //if it's an underclassmen, show the leaderboard without a back button. (technically just covers the root view)
+            NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[http getRankings]] ;
             LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
             [lvc setRankings:rankings];
             [lvc setSeniorMode:NO];
+            
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"userIsSenior"];
             lvc.navigationItem.hidesBackButton = YES;
             [self.navigationController pushViewController:lvc animated:YES];
