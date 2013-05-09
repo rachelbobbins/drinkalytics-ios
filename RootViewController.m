@@ -72,6 +72,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
     NSString *label;
     NSString *details;
     
@@ -87,8 +89,9 @@
                 details = [(Drink *)[self.drinksArray objectAtIndex:0] elapsedTime];
             }
         } else {
+            HTTPController *http = [[HTTPController alloc] init];
             label = @"Rank in class";
-            details = [NSString stringWithFormat:@"%i", 3];
+            details = [NSString stringWithFormat:@"%i", [http getMyRank]];
             [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
         }
         
