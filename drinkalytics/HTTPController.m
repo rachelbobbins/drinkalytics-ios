@@ -66,7 +66,8 @@
     if ([response statusCode] == 200) {
         NSError *jsonReadError = nil;
         NSArray *responseArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
-        NSMutableArray *drinkArray = [[NSMutableArray alloc] init];
+        //drinks are in chronological order
+        NSMutableArray *reverseDrinkArray = [[NSMutableArray alloc] init];
         
         for (NSDictionary *drinkDict in responseArray) {
             long long ms = [[drinkDict valueForKey:@"date"] longLongValue];
@@ -76,8 +77,15 @@
             Drink *drink = [[Drink alloc] init];
             [drink setType:[drinkDict valueForKey:@"drink"]];
             [drink setTimestamp:date];
+            [reverseDrinkArray addObject:drink];
+        }
+        
+        //we want reverse chronological order
+        NSMutableArray *drinkArray = [[NSMutableArray alloc] init];
+        for (Drink *drink in [reverseDrinkArray reverseObjectEnumerator]) {
             [drinkArray addObject:drink];
         }
+        
         return drinkArray;
     } else {
         NSLog(@"response status code: %i", [response statusCode]);
