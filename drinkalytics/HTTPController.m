@@ -111,7 +111,7 @@
     
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
-    
+
     NSString *userId = [(NSDictionary *)[responseDict objectForKey:@"user"] objectForKey: @"id"];
     
     if ([response statusCode] == 200) {
@@ -145,6 +145,7 @@
          [NSKeyedArchiver archivedDataWithRootObject:[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]]
                                                  forKey:@"savedCookies"];
         [[NSUserDefaults standardUserDefaults] setValue:userId forKey:@"userid"];
+        [[NSUserDefaults standardUserDefaults] setValue:sessionid forKey:@"sessionid"];
         [[NSUserDefaults standardUserDefaults] synchronize];
 
         return YES;
@@ -188,6 +189,31 @@
         NSLog(@"error: %i, %@", [response statusCode], error);
     }
 
+}
+
+- (BOOL) userIsSenior
+{
+    NSString *urlstring = [NSString stringWithFormat:@"http://directory.olinapps.com/api/me?sessionid=%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"sessionid"]];
+    NSURL *url = [[NSURL alloc] initWithString:urlstring];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    NSHTTPURLResponse *response;
+    NSError *error;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    if ([response statusCode] == 200) {
+        NSError *jsonReadError = nil;
+        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
+        NSInteger year = [[responseDict valueForKey:@"year"] integerValue];
+        if (year == 2013) {
+            return YES;
+        } else {
+            return NO;
+        };
+    } else {
+        NSLog(@"error: %@", error);
+    }
 }
 
 

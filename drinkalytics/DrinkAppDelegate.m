@@ -9,6 +9,8 @@
 #import "DrinkAppDelegate.h"
 #import "RootViewController.h"
 #import "LoginViewController.h"
+#import "HTTPController.h"
+#import "LeaderboardViewController.h"
 
 @implementation DrinkAppDelegate
 
@@ -33,12 +35,23 @@
     UINavigationController *navController = [[UINavigationController alloc]init];
     
     RootViewController *mainController = [[RootViewController alloc] init];
-    
     [navController pushViewController:mainController animated:NO];
+    
     if ([[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] count] == 0) {
         LoginViewController *loginView = [[LoginViewController alloc] init];
         loginView.navigationItem.hidesBackButton = YES;
         [navController pushViewController:loginView animated:NO];
+    }
+    
+    HTTPController *httpController = [[HTTPController alloc] init];
+    if (![httpController userIsSenior])
+    {
+        
+        NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[httpController getRankings]] ;
+        LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
+        [lvc setRankings:rankings];
+        lvc.navigationItem.hidesBackButton = YES;
+        [navController pushViewController:lvc animated:YES];
     }
     
     self.window.rootViewController = navController;

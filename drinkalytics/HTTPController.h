@@ -14,5 +14,6 @@
 - (NSArray *)getMyDrinks:(NSString *)userId;
 - (NSInteger)getMyRank;
 - (BOOL)loginWithUsername:(NSString *)username andPassword:(NSString *)password;
+- (BOOL)userIsSenior;
 @property NSMutableData *responseData;
 @end
