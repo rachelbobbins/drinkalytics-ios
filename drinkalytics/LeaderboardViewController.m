@@ -68,10 +68,9 @@
         NSInteger totalDrinks = 0;
         for (Person *person in [self.rankings allValues]) {
             totalDrinks = totalDrinks + person.numberOfDrinks;
-            NSLog(@"person: %@, number of drinks: %i", person.userId, person.numberOfDrinks);
-            NSLog(@"total drinks: %i", totalDrinks);
         }
-        int remainingDrinks = 2013 - totalDrinks;
+        NSInteger remainingDrinks = 2013 - totalDrinks;
+        
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
         cell.textLabel.text = [NSString stringWithFormat:@"%i down. %i to go.", totalDrinks, remainingDrinks];
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
@@ -103,7 +102,7 @@
         Person *person = (Person *)[self.rankings objectForKey:rank];
 
         cell.textLabel.text = person.userId;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", person.numberOfDrinks];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", person.numberOfDrinks];
     }
     
     return cell;

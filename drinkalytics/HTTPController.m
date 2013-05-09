@@ -8,6 +8,7 @@
 
 #import "HTTPController.h"
 #import "Person.h"
+#import "Drink.h"
 
 @implementation HTTPController
 - (void)postDrinkWithType:(NSString *)name andDetails:(NSString *)detail
@@ -19,7 +20,7 @@
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     NSMutableString *postString = [[NSMutableString alloc]init];
-    [postString appendFormat:@"drink=%@", name];
+    [postString appendFormat:@"drink=%@:%@", name, detail];
     [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
 
     NSURLConnection *conn = [[NSURLConnection alloc] init];
@@ -60,6 +61,39 @@
 
 }
 
+- (NSArray *)getMyDrinks:(NSString *)userId
+{
+    NSString *urlString = [NSString stringWithFormat:@"http://drinkalytics.herokuapp.com/api/drinks?student=%@", userId];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    NSHTTPURLResponse *response;
+    NSError *error;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    if ([response statusCode] == 200) {
+        NSError *jsonReadError = nil;
+        NSArray *responseArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
+        NSMutableArray *drinkArray = [[NSMutableArray alloc] init];
+        
+        for (NSDictionary *drinkDict in responseArray) {
+            long long ms = [[drinkDict valueForKey:@"date"] longLongValue];
+            long long s = ms / 1000;
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:s];
+            
+            Drink *drink = [[Drink alloc] init];
+            [drink setType:[drinkDict valueForKey:@"drink"]];
+            [drink setTimestamp:date];
+            [drinkArray addObject:drink];
+        }
+        return drinkArray;
+    } else {
+        NSLog(@"response status code: %i", [response statusCode]);
+    }
+    
+}
+
 - (BOOL)loginWithUsername:(NSString *)username andPassword:(NSString *)password
 {
     //obtain session cookie
@@ -74,8 +108,13 @@
     [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
     NSHTTPURLResponse *response;
     NSError *error;
+    NSError *jsonReadError;
     
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonReadError];
+    
+    NSString *userId = [(NSDictionary *)[responseDict objectForKey:@"user"] objectForKey: @"id"];
+    NSLog(@"fetched user id: %@", userId);
     
     if ([response statusCode] == 200) {
         //give drinkalytics permission to use the session cookie
@@ -94,10 +133,10 @@
         NSHTTPURLResponse *response;
         NSError *error;
         (void)[NSURLConnection sendSynchronousRequest:newrequest returningResponse:&response error:&error];
+
         
-        NSLog(@"response: %i", [response statusCode]);
         //save the session cookie
-        NSArray *keys = [[NSArray alloc] initWithObjects:@"sessionid", @"username", nil];
+        NSArray *keys = [[NSArray alloc] initWithObjects:@"sessionid", @"userid", nil];
         NSArray * values = [[NSArray alloc] initWithObjects:sessionid, username, nil];
         NSDictionary *properties = [[NSDictionary alloc] initWithObjects:values forKeys:keys];
         NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:properties];
@@ -107,6 +146,7 @@
         [[NSUserDefaults standardUserDefaults] setValue:
          [NSKeyedArchiver archivedDataWithRootObject:[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]]
                                                  forKey:@"savedCookies"];
+        [[NSUserDefaults standardUserDefaults] setValue:userId forKey:@"userid"];
         [[NSUserDefaults standardUserDefaults] synchronize];
 
         return YES;

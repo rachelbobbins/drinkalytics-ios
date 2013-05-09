@@ -11,4 +11,6 @@
 @interface RootViewController : UITableViewController
 @property (nonatomic, retain) NSMutableArray *drinksArray;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property NSInteger myRank;
+//@property NSMutableArray *myDrinks;
 @end

@@ -58,16 +58,16 @@
     NSString *type = [[[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textLabel]text];
     NSString *details = self.detailsField.text;
 
-    Drink *drink = (Drink *)[NSEntityDescription insertNewObjectForEntityForName:@"Drink"
-                                                          inManagedObjectContext:self.managedObjectContext];
-    [drink setDetails:details];
-    [drink setType:type];
-    [drink setTimestamp:[NSDate date]];
-    NSError *error = nil;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Error saving drink");
-    }
-    
+//    Drink *drink = (Drink *)[NSEntityDescription insertNewObjectForEntityForName:@"Drink"
+//                                                          inManagedObjectContext:self.managedObjectContext];
+//    [drink setDetails:details];
+//    [drink setType:type];
+//    [drink setTimestamp:[NSDate date]];
+//    NSError *error = nil;
+//    if (![self.managedObjectContext save:&error]) {
+//        NSLog(@"Error saving drink");
+//    }
+//    
     HTTPController *httpController = [[HTTPController alloc] init];
     [httpController postDrinkWithType:type andDetails:details];
     [self.navigationController popViewControllerAnimated:YES];

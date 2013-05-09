@@ -18,7 +18,7 @@
 
 @implementation RootViewController
 @synthesize drinksArray;
-@synthesize managedObjectContext;
+//@synthesize managedObjectContext;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -89,7 +89,7 @@
             }
         } else {
             label = @"Rank in class";
-            details = @"4 of 56";
+            details = [NSString stringWithFormat:@"%i", 3];
             [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
         }
         
@@ -143,20 +143,8 @@
 }
 
 - (void)setDrinksArray {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Drink" inManagedObjectContext:self.managedObjectContext];
-    [request setEntity:entity];
-   
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    [request setSortDescriptors:sortDescriptors];
-    [request setReturnsObjectsAsFaults:NO]; //otherwise we get lots of faults.
-    
-    NSError *error = nil;
-    NSMutableArray *mutableFetchResults = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-    if (mutableFetchResults == nil) {
-        NSLog(@"error");
-    } 
-    self.drinksArray = mutableFetchResults;
+    HTTPController *http = [[HTTPController alloc] init];
+    self.drinksArray = [[http getMyDrinks:[[NSUserDefaults standardUserDefaults] valueForKey:@"userid"]] mutableCopy];
+
 }
 @end
