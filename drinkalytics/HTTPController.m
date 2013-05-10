@@ -70,8 +70,7 @@
         //drinks are in chronological order
         NSMutableArray *reverseDrinkArray = [[NSMutableArray alloc] init];
         
-        for (NSDictionary *drinkDict in responseArray) {
-            NSLog(@"%@", drinkDict);
+        for (NSDictionary *drinkDict in responseArray) {    
             long long ms = [[drinkDict valueForKey:@"date"] longLongValue];
             long long s = ms / 1000;
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:s];

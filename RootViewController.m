@@ -147,14 +147,11 @@
         //TODO: prepopulate with whatever this drink *actually* is, after Tim adds "detail" property to model
         Drink *drink = [self.drinksArray objectAtIndex:indexPath.row];
         NSString *type = [drink type];
-        NSString *details = [drink details];
-        NSInteger servings = [drink servings];
-        
         NSInteger rowind = [[Drink types] indexOfObject:type];
         
         TakeADrinkViewController *dvc = [[TakeADrinkViewController alloc] init];
         [dvc.typePickerView.pickerView selectRow:rowind inComponent:0 animated:NO];
-        dvc.detailsField.text = details;
+        dvc.detailsField.text = drink.details;
         dvc.detailsField.placeholder = nil;
         dvc.numberOfServings.selectedSegmentIndex = drink.servings - 1;
         [self.navigationController pushViewController:dvc animated:YES];
