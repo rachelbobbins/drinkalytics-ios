@@ -144,6 +144,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 1) { //click on a drink to drink it again.
+        //TODO: prepopulate with whatever this drink *actually* is, after Tim adds "detail" property to model
 //        Drink *drink = [self.drinksArray objectAtIndex:indexPath.row];
         NSString *type = @"Other";
         NSInteger rowind = [[Drink types] indexOfObject:type];

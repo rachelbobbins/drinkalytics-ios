@@ -28,6 +28,10 @@
 
         self.detailsField = [[UITextField alloc] initWithFrame:CGRectMake(20, 10, 240, 44)];
         self.detailsField.placeholder = @"eg: vodka soda";
+        
+        self.numberOfServings = [[UISegmentedControl alloc] initWithItems:
+                                 [[NSArray alloc] initWithObjects:@"1", @"2", @"3", @"4", nil]];
+        self.numberOfServings.selectedSegmentIndex = 0;
    }
     return self;
 }
@@ -74,7 +78,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -87,21 +91,24 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];        
-        
     }
     
     if (indexPath.section == 0) {
         [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
         NSString *drinkType = self.typePickerView.selectedDrinkType;
         cell.textLabel.text = drinkType;
-
     } else if (indexPath.section == 1) {
-
+        self.numberOfServings.bounds = CGRectMake(cell.bounds.origin.x, cell.bounds.origin.y, cell.bounds.size.width - 15, cell.bounds.size.height + 5);
+        cell.accessoryView = self.numberOfServings;
+        cell.backgroundView = nil;
+    } else if (indexPath.section == 2) {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell addSubview:self.detailsField];
-        
-        
     }
+
+        
+        
+//    }
 
     
     return cell;
@@ -116,7 +123,9 @@
         case 0:
             return @"Type";
         case 1:
-            return @"Details";
+            return @"Servings of Alcohol";
+        case 2:
+            return @"Description";
         default:
             return @"";
     }
@@ -138,7 +147,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
+    if (indexPath.section == 0 && indexPath.row == 0) {
         [self showPickerView];
     }
 }
