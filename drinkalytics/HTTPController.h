@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface HTTPController : NSObject 
-- (void)postDrinkWithType:(NSString *)name andDetails:(NSString *)detail;
+- (void)postDrinkWithType:(NSString *)name andDetails:(NSString *)detail andServings:(NSInteger)servings;
 - (NSDictionary *)getRankings;
 - (NSArray *)getMyDrinks:(NSString *)userId;
 - (NSInteger)getMyRank;

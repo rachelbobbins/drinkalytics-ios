@@ -15,6 +15,6 @@
 @property NSDate *timestamp;
 @property NSString *type;
 @property NSString *details;
-
+@property NSInteger servings;
 
 @end

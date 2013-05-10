@@ -11,7 +11,7 @@
 #import "Drink.h"
 
 @implementation HTTPController
-- (void)postDrinkWithType:(NSString *)name andDetails:(NSString *)detail
+- (void)postDrinkWithType:(NSString *)name andDetails:(NSString *)detail andServings:(NSInteger)servings
 {
     //posts a drink
     NSURL *url = [[NSURL alloc] initWithString:@"http://drinkalytics.herokuapp.com/api/drinks"];
@@ -20,10 +20,11 @@
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     NSMutableString *postString = [[NSMutableString alloc]init];
-    [postString appendFormat:@"drink=%@", name];
-    if (detail && ([detail length] > 0)) {
-        [postString appendFormat:@":%@", detail];
+    [postString appendFormat:@"drink=%@&servings=%i", name, servings];
+    if (detail != nil && ![detail isEqualToString:@""]) {
+        [postString appendFormat:@"&details=%@", detail];
     }
+
     [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
 
     NSHTTPURLResponse *response;
@@ -70,6 +71,7 @@
         NSMutableArray *reverseDrinkArray = [[NSMutableArray alloc] init];
         
         for (NSDictionary *drinkDict in responseArray) {
+            NSLog(@"%@", drinkDict);
             long long ms = [[drinkDict valueForKey:@"date"] longLongValue];
             long long s = ms / 1000;
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:s];
@@ -77,6 +79,8 @@
             Drink *drink = [[Drink alloc] init];
             [drink setType:[drinkDict valueForKey:@"drink"]];
             [drink setTimestamp:date];
+            [drink setDetails:[drinkDict valueForKey:@"details"]];
+            [drink setServings:[[drinkDict valueForKey:@"servings"] integerValue]];
             [reverseDrinkArray addObject:drink];
         }
         

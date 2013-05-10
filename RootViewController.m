@@ -145,14 +145,18 @@
 {
     if (indexPath.section == 1) { //click on a drink to drink it again.
         //TODO: prepopulate with whatever this drink *actually* is, after Tim adds "detail" property to model
-//        Drink *drink = [self.drinksArray objectAtIndex:indexPath.row];
-        NSString *type = @"Other";
+        Drink *drink = [self.drinksArray objectAtIndex:indexPath.row];
+        NSString *type = [drink type];
+        NSString *details = [drink details];
+        NSInteger servings = [drink servings];
+        
         NSInteger rowind = [[Drink types] indexOfObject:type];
         
         TakeADrinkViewController *dvc = [[TakeADrinkViewController alloc] init];
         [dvc.typePickerView.pickerView selectRow:rowind inComponent:0 animated:NO];
-        dvc.detailsField.text = @"Vodka";
+        dvc.detailsField.text = details;
         dvc.detailsField.placeholder = nil;
+        dvc.numberOfServings.selectedSegmentIndex = drink.servings - 1;
         [self.navigationController pushViewController:dvc animated:YES];
         
 
