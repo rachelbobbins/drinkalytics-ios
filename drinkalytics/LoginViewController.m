@@ -131,25 +131,47 @@
     NSString *username = [self.nameField text];
     NSString *password = [self.passwordField text];
     
+    UIActivityIndicatorView *spinner = [self createSpinner];
+    
+    [self.view addSubview:spinner];
+    [self.view bringSubviewToFront:spinner];
+    [spinner startAnimating];
+    
     HTTPController *http = [[HTTPController alloc] init];
-    if ([http loginWithUsername:username andPassword:password])
-    {
-        if (![http userIsSenior])
-        {
-            //if it's an underclassmen, show the leaderboard without a back button. (technically just covers the root view)
-            NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[http getRankings]] ;
-            LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
-            [lvc setRankings:rankings];
-            [lvc setSeniorMode:NO];
-            
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"userIsSenior"];
-            lvc.navigationItem.hidesBackButton = YES;
-            [self.navigationController pushViewController:lvc animated:YES];
-        } else {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userIsSenior"];
-            [self.navigationController popViewControllerAnimated:YES];
-        }
+    
+    if ([http loginWithUsername:username andPassword:password]) {
+        dispatch_queue_t downloadQueue = dispatch_queue_create("downloader", NULL);
+        
+        dispatch_async(downloadQueue, ^{
+            BOOL userIsSenior = [http userIsSenior];
+            if (!userIsSenior) {
+                NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[http getRankings]] ;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [spinner stopAnimating];
+                    [spinner removeFromSuperview];
+                    LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
+                    [lvc setRankings:rankings];
+                    [lvc setSeniorMode:NO];
+                    
+                    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"userIsSenior"];
+                    lvc.navigationItem.hidesBackButton = YES;
+                    [self.navigationController pushViewController:lvc animated:YES];
+                    
+                    
+                });
+
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userIsSenior"];
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            }
+
+        });
     } else {
+        [spinner stopAnimating];
+        [spinner removeFromSuperview];
         [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] animated:NO];
         UIAlertView *validationMessage = [[UIAlertView alloc] initWithTitle:@"Login Error"
                                     message:@"Use your regular Olin credentials, eg: jsmith, <password>" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -159,25 +181,21 @@
 
 }
 
-//- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-//    [_responseData appendData:data];
-//}
-//
-//- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-//    //Oops! handle failure here
-//}
-//
-//- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-//    if (_statusCode >= 200 && _statusCode < 400) {
-//        //Things look ok
-//        NSString *responseString = [[[NSString alloc] initWithData:_responseData] autorelease];
-//        //Send this to an xml lib and parse
-//    }
-//    
-//    [_responseData release];
-//    _responseData = nil;
-//    [connection autorelease];
-//}
 
+- (UIActivityIndicatorView *) createSpinner
+{
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    CGFloat centerx = self.tableView.contentSize.width / 2;
+    CGFloat centery = self.tableView.bounds.size.height / 2 + self.tableView.contentOffset.y;
+    [spinner setCenter:CGPointMake(centerx, centery)];
+    
+    [spinner setHidden:NO];
+    [spinner setBackgroundColor:[UIColor blackColor]];
+    [spinner setBounds:CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    [spinner setOpaque:NO];
+    [spinner setAlpha:0.8];
+    
+    return spinner;
+}
 
 @end

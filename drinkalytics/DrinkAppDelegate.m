@@ -35,8 +35,7 @@
     
     UINavigationController *navController = [[UINavigationController alloc]init];
     
-    if ([[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] count] == 0) {
-        NSLog(@"presenting login view");
+    if ([[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] count] == 0) { //present login view to fresh user
         RootViewController *mainController = [[RootViewController alloc] init];
         [navController pushViewController:mainController animated:NO];
         
@@ -44,8 +43,7 @@
         loginView.navigationItem.hidesBackButton = YES;
         [navController pushViewController:loginView animated:NO];
     } else {
-        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"userIsSenior"]) {
-            NSLog(@"retrieving previous user");
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"userIsSenior"]) { //prepare leaderboard for underclassmen
             HTTPController *http = [[HTTPController alloc] init];
             NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[http getRankings]] ;
             
@@ -53,7 +51,7 @@
             [lvc setRankings:rankings];
             [lvc setSeniorMode:YES];
             [navController pushViewController:lvc animated:YES];
-        } else {
+        } else { //prepare regular home screen for seniors
             RootViewController *mainController = [[RootViewController alloc] init];
             [navController pushViewController:mainController animated:NO];
         }
