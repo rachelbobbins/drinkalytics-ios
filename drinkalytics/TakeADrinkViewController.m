@@ -25,6 +25,9 @@
     if (self) {
         DrinkPickerView *typePickerView = [[DrinkPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         [self setTypePickerView:typePickerView];
+
+        self.detailsField = [[UITextField alloc] initWithFrame:CGRectMake(20, 10, 240, 44)];
+        self.detailsField.placeholder = @"eg: vodka soda";
    }
     return self;
 }
@@ -93,8 +96,7 @@
         cell.textLabel.text = drinkType;
 
     } else if (indexPath.section == 1) {
-        self.detailsField = [[UITextField alloc] initWithFrame:CGRectMake(20, 10, cell.bounds.size.width, cell.bounds.size.height)];
-        self.detailsField.placeholder = @"eg: vodka soda";
+
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell addSubview:self.detailsField];
         

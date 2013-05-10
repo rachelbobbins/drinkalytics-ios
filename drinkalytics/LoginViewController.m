@@ -87,7 +87,7 @@
             textField.keyboardType = UIKeyboardTypeDefault;
             textField.returnKeyType = UIReturnKeyDone;
             textField.secureTextEntry = YES;
-            textField.tag = 1;
+//            textField.tag = 1;
             [self setPasswordField:textField];
             
         }
@@ -111,6 +111,7 @@
         }
     } else {
         cell.textLabel.text = @"Log In";
+        cell.tag = 2;
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }
     
@@ -122,7 +123,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1) {
+//    if (indexPath.section == 0) {
+//        if (indexPath.row == 0) {
+//            [self.nameField ];
+//        }
+//    }
+//    else
+        if (indexPath.section == 1) {
         [self loginViaOlinApps];
     } 
 }
@@ -131,7 +138,7 @@
 {
     [self.view endEditing:YES];
     NSString *username = [self.nameField text];
-    NSString *password = [self.passwordField text];    
+    NSString *password = [self.passwordField text];
     self.passwordField.text = @"";
     
     UIActivityIndicatorView *spinner = [self createSpinner];

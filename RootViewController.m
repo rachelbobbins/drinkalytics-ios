@@ -78,12 +78,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+
     
     NSString *label;
     NSString *details;
     
     if (indexPath.section == 0) {
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         if (indexPath.row == 0) {
             label = @"Total Drinks";
             details = [NSString stringWithFormat:@"%i", [self.drinksArray count]];
@@ -103,6 +104,8 @@
         
     }  else if (indexPath.section == 1) {
         Drink *drink = [self.drinksArray objectAtIndex:indexPath.row];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+        
         if (drink.details && drink.type) {
             label = [NSString stringWithFormat:@"%@: %@", drink.type, drink.details];
         } else {
@@ -136,6 +139,23 @@
 {
     LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
     [self.navigationController pushViewController:lvc animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 1) { //click on a drink to drink it again.
+//        Drink *drink = [self.drinksArray objectAtIndex:indexPath.row];
+        NSString *type = @"Other";
+        NSInteger rowind = [[Drink types] indexOfObject:type];
+        
+        TakeADrinkViewController *dvc = [[TakeADrinkViewController alloc] init];
+        [dvc.typePickerView.pickerView selectRow:rowind inComponent:0 animated:NO];
+        dvc.detailsField.text = @"Vodka";
+        dvc.detailsField.placeholder = nil;
+        [self.navigationController pushViewController:dvc animated:YES];
+        
+
+    }
 }
 
 - (void) takeDrink

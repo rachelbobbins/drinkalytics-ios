@@ -21,6 +21,7 @@
     NSLog(@"called");
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
+        NSLog(@"user is senior: %@", [[NSUserDefaults standardUserDefaults] valueForKey:@"userIsSenior"]);
         HTTPController *http = [[HTTPController alloc] init];
         NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[http getRankings]] ;
         
@@ -45,7 +46,6 @@
     } else {
         [self.navigationItem setTitle:@"This could be you next year!"];
     }
-            [self.navigationItem.backBarButtonItem setTitle:@"Back"];
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
