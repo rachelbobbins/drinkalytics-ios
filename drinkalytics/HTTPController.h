@@ -8,12 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HTTPController : NSObject <NSURLConnectionDelegate>
+@interface HTTPController : NSObject 
 - (void)postDrinkWithType:(NSString *)name andDetails:(NSString *)detail;
 - (NSDictionary *)getRankings;
 - (NSArray *)getMyDrinks:(NSString *)userId;
 - (NSInteger)getMyRank;
 - (BOOL)loginWithUsername:(NSString *)username andPassword:(NSString *)password;
 - (BOOL)userIsSenior;
-@property NSMutableData *responseData;
 @end

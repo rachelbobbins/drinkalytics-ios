@@ -21,6 +21,7 @@
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
     NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:@"savedCookies"];
     if([cookiesdata length] > 0) {
+        NSLog(@"retreiving saved cookies");
         NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookiesdata];
         NSHTTPCookie *cookie;
         
@@ -35,6 +36,7 @@
     UINavigationController *navController = [[UINavigationController alloc]init];
     
     if ([[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] count] == 0) {
+        NSLog(@"presenting login view");
         RootViewController *mainController = [[RootViewController alloc] init];
         [navController pushViewController:mainController animated:NO];
         
@@ -43,6 +45,7 @@
         [navController pushViewController:loginView animated:NO];
     } else {
         if (![[NSUserDefaults standardUserDefaults] boolForKey:@"userIsSenior"]) {
+            NSLog(@"retrieving previous user");
             HTTPController *http = [[HTTPController alloc] init];
             NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[http getRankings]] ;
             

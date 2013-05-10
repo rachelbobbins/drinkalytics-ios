@@ -54,6 +54,12 @@
 }
 - (void)saveDrink
 {
+    [self.detailsField resignFirstResponder];
+    NSString *displayedType = [[[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textLabel]text];
+    if (![self.typePickerView.selectedDrinkType isEqualToString:displayedType]) {
+        [self.tableView reloadData];
+    }
+    
     NSString *type = [[[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textLabel]text];
     NSString *details = self.detailsField.text;
 
@@ -115,6 +121,7 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
+    [self.detailsField resignFirstResponder];
     [self.view addSubview:self.typePickerView];
 }
 
