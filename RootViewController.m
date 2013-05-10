@@ -9,6 +9,7 @@
 #import "RootViewController.h"
 #import "LeaderboardViewController.h"
 #import "TakeADrinkViewController.h"
+//#import "LoginViewController.h"
 #import "HTTPController.h"
 #import "Drink.h"
 
@@ -32,7 +33,11 @@
 {
     [super viewDidLoad];
     [self.navigationItem setTitle:@"Drinkalytics"];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc] initWithTitle:@"Logout"
+                                                                            style:UIBarButtonSystemItemCancel
+                                                                           target:self
+                                                                           action:@selector(logout)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Drink"
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
@@ -147,5 +152,21 @@
     HTTPController *http = [[HTTPController alloc] init];
     self.drinksArray = [[http getMyDrinks:[[NSUserDefaults standardUserDefaults] valueForKey:@"userid"]] mutableCopy];
 
+}
+
+- (void)logout
+{
+    NSLog(@"called");
+    //clear sessionid, userid, userissenior
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
+    NSHTTPCookie *cookie;
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (cookie in [storage cookies]) {
+        [storage deleteCookie:cookie];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+//    LoginViewController *lvc = [[LoginViewController alloc] init];
+//    [self.navigationController]
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 @end

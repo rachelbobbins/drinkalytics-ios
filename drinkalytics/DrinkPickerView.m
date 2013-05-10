@@ -17,7 +17,7 @@
     if (self) {
         [self setBackgroundColor:[UIColor blackColor]];
         [self setAlpha:0.7];
-        // Initialization code
+        
         UIPickerView *myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(10, 0, 300, 210)];
         myPickerView.delegate = self;
         myPickerView.showsSelectionIndicator = YES;
@@ -35,7 +35,6 @@
 
 -(void)viewTapped:(UITapGestureRecognizer *)recognizer {
     [self removeFromSuperview];
-//    [
 }
 
 - (NSString *)selectedDrinkType {

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5A30E5301735AC5E001DC405 /* DrinkPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A30E52F1735AC5E001DC405 /* DrinkPickerView.m */; };
 		5A8F801B1737483A0072756F /* HTTPController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8F801A1737483A0072756F /* HTTPController.m */; };
+		5AC0BA88173C7E930023B495 /* drinkIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC0BA87173C7E930023B495 /* drinkIcon.png */; };
 		5AD52263171F1B9A002D2A3F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD52262171F1B9A002D2A3F /* UIKit.framework */; };
 		5AD52265171F1B9A002D2A3F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD52264171F1B9A002D2A3F /* Foundation.framework */; };
 		5AD52267171F1B9A002D2A3F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD52266171F1B9A002D2A3F /* CoreGraphics.framework */; };
@@ -33,6 +34,7 @@
 		5A30E52F1735AC5E001DC405 /* DrinkPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrinkPickerView.m; sourceTree = "<group>"; };
 		5A8F80191737483A0072756F /* HTTPController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPController.h; sourceTree = "<group>"; };
 		5A8F801A1737483A0072756F /* HTTPController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPController.m; sourceTree = "<group>"; };
+		5AC0BA87173C7E930023B495 /* drinkIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drinkIcon.png; sourceTree = "<group>"; };
 		5AD5225E171F1B9A002D2A3F /* drinkalytics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = drinkalytics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AD52262171F1B9A002D2A3F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5AD52264171F1B9A002D2A3F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -80,6 +82,7 @@
 		5AD52253171F1B9A002D2A3F = {
 			isa = PBXGroup;
 			children = (
+				5AC0BA87173C7E930023B495 /* drinkIcon.png */,
 				5AD5226A171F1B9A002D2A3F /* drinkalytics */,
 				5AD52261171F1B9A002D2A3F /* Frameworks */,
 				5AD5225F171F1B9A002D2A3F /* Products */,
@@ -202,6 +205,7 @@
 				5AD52277171F1B9A002D2A3F /* Default.png in Resources */,
 				5AD52279171F1B9A002D2A3F /* Default@2x.png in Resources */,
 				5AD5227B171F1B9A002D2A3F /* Default-568h@2x.png in Resources */,
+				5AC0BA88173C7E930023B495 /* drinkIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

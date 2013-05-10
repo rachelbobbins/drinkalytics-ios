@@ -128,6 +128,7 @@
 
 - (void)loginViaOlinApps
 {
+    [self.view endEditing:YES];
     NSString *username = [self.nameField text];
     NSString *password = [self.passwordField text];
     
@@ -143,6 +144,7 @@
         dispatch_queue_t downloadQueue = dispatch_queue_create("downloader", NULL);
         
         dispatch_async(downloadQueue, ^{
+            NSLog(@"here");
             BOOL userIsSenior = [http userIsSenior];
             if (!userIsSenior) {
                 NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[http getRankings]] ;
