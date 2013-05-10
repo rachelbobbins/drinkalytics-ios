@@ -35,21 +35,14 @@
     
     UINavigationController *navController = [[UINavigationController alloc]init];
     
-    if ([[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] count] == 0) { //present login view to fresh user
-        RootViewController *mainController = [[RootViewController alloc] init];
-        [navController pushViewController:mainController animated:NO];
-        
-        LoginViewController *loginView = [[LoginViewController alloc] init];
-        loginView.navigationItem.hidesBackButton = YES;
-        [navController pushViewController:loginView animated:NO];
-    } else {
+    //if user has no cookies, they log in. login view controller deals w/ logic of presenting proper view.
+    LoginViewController *loginView = [[LoginViewController alloc] init];
+    loginView.navigationItem.hidesBackButton = YES;
+    [navController pushViewController:loginView animated:NO];
+    
+    if ([[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] count] > 0) {
         if (![[NSUserDefaults standardUserDefaults] boolForKey:@"userIsSenior"]) { //prepare leaderboard for underclassmen
-            HTTPController *http = [[HTTPController alloc] init];
-            NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[http getRankings]] ;
-            
             LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
-            [lvc setRankings:rankings];
-            [lvc setSeniorMode:YES];
             [navController pushViewController:lvc animated:YES];
         } else { //prepare regular home screen for seniors
             RootViewController *mainController = [[RootViewController alloc] init];

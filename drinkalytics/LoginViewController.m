@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "HTTPController.h"
 #import "LeaderboardViewController.h"
+#import "RootViewController.h"
 
 @interface LoginViewController ()
 
@@ -130,7 +131,8 @@
 {
     [self.view endEditing:YES];
     NSString *username = [self.nameField text];
-    NSString *password = [self.passwordField text];
+    NSString *password = [self.passwordField text];    
+    self.passwordField.text = @"";
     
     UIActivityIndicatorView *spinner = [self createSpinner];
     
@@ -144,19 +146,16 @@
         dispatch_queue_t downloadQueue = dispatch_queue_create("downloader", NULL);
         
         dispatch_async(downloadQueue, ^{
-            NSLog(@"here");
             BOOL userIsSenior = [http userIsSenior];
             if (!userIsSenior) {
-                NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[http getRankings]] ;
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"userIsSenior"];                
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    
                     [spinner stopAnimating];
                     [spinner removeFromSuperview];
-                    LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
-                    [lvc setRankings:rankings];
-                    [lvc setSeniorMode:NO];
                     
-                    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"userIsSenior"];
                     lvc.navigationItem.hidesBackButton = YES;
                     [self.navigationController pushViewController:lvc animated:YES];
                     
@@ -164,9 +163,14 @@
                 });
 
             } else {
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userIsSenior"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userIsSenior"];
-                    [self.navigationController popViewControllerAnimated:YES];
+                    [spinner stopAnimating];
+                    [spinner removeFromSuperview];
+                    RootViewController *rvc = [[RootViewController alloc] init];
+                    [self.navigationController pushViewController:rvc animated:YES];
                 });
             }
 
@@ -199,5 +203,6 @@
     
     return spinner;
 }
+
 
 @end

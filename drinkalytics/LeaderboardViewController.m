@@ -8,6 +8,7 @@
 
 #import "LeaderboardViewController.h"
 #import "Person.h"
+#import "HTTPController.h"
 
 @interface LeaderboardViewController ()
 
@@ -17,9 +18,16 @@
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
+    NSLog(@"called");
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        // Custom initialization
+        HTTPController *http = [[HTTPController alloc] init];
+        NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[http getRankings]] ;
+        
+        [self setRankings:rankings];
+        [self setSeniorMode:[[NSUserDefaults standardUserDefaults] valueForKey:@"userIsSenior"]];
+
+
     }
     return self;
 }
@@ -37,6 +45,7 @@
     } else {
         [self.navigationItem setTitle:@"This could be you next year!"];
     }
+            [self.navigationItem.backBarButtonItem setTitle:@"Back"];
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 

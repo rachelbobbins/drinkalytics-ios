@@ -33,7 +33,7 @@
 {
     [super viewDidLoad];
     [self.navigationItem setTitle:@"Drinkalytics"];
-//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
     self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc] initWithTitle:@"Logout"
                                                                             style:UIBarButtonSystemItemCancel
                                                                            target:self
@@ -42,6 +42,7 @@
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(takeDrink)];
+
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -133,12 +134,7 @@
 
 - (void) tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    HTTPController *http = [[HTTPController alloc] init];
-    NSDictionary *rankings = [[NSDictionary alloc] initWithDictionary:[http getRankings]] ;
-    
     LeaderboardViewController *lvc = [[LeaderboardViewController alloc] init];
-    [lvc setRankings:rankings];
-    [lvc setSeniorMode:YES];
     [self.navigationController pushViewController:lvc animated:YES];
 }
 
@@ -156,7 +152,6 @@
 
 - (void)logout
 {
-    NSLog(@"called");
     //clear sessionid, userid, userissenior
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
     NSHTTPCookie *cookie;
@@ -165,8 +160,6 @@
         [storage deleteCookie:cookie];
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
-//    LoginViewController *lvc = [[LoginViewController alloc] init];
-//    [self.navigationController]
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

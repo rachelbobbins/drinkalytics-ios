@@ -105,6 +105,7 @@
     NSMutableString *postString = [[NSMutableString alloc]init];
     [postString appendFormat:@"username=%@&password=%@", username, password];
     [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
+    
     NSHTTPURLResponse *response;
     NSError *error;
     NSError *jsonReadError;
