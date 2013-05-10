@@ -24,7 +24,9 @@
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        // Custom initialization
+        NSLog(@"initing");
+        HTTPController *http = [[HTTPController alloc] init];
+        self.myPerson = [http getMyPerson];
     }
     return self;
 }
@@ -67,7 +69,7 @@
 {
     switch (section) {
         case 0:
-            return 3;
+            return 4;
         case 1:
             return [self.drinksArray count];
         default:
@@ -86,9 +88,13 @@
     if (indexPath.section == 0) {
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         if (indexPath.row == 0) {
-            label = @"Total Drinks";
-            details = [NSString stringWithFormat:@"%i", [self.drinksArray count]];
+            label = @"Total Servings";
+            details = [NSString stringWithFormat:@"%i", self.myPerson.numberOfServings];
         } else if (indexPath.row == 1) {
+            label = @"Individual Drinks";
+            details = [NSString stringWithFormat:@"%i", [self.drinksArray count]];
+        }
+        else if (indexPath.row == 2) {
             label = @"Last Drink";
             if ([self.drinksArray count] == 0) {
                 details = @"Never :(";
@@ -96,9 +102,8 @@
                 details = [(Drink *)[self.drinksArray objectAtIndex:0] elapsedTime];
             }
         } else {
-            HTTPController *http = [[HTTPController alloc] init];
             label = @"Rank in class";
-            details = [NSString stringWithFormat:@"%i", [http getMyRank]];
+            details = [NSString stringWithFormat:@"%i", self.myPerson.rank];
             [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
         }
         
@@ -126,7 +131,7 @@
         case 0:
             return @"Summary";
         case 1:
-            return @"Drink Log";
+            return @"Drink Log\n(click a drink to do it again)";
         default:
             return @"";
     }
@@ -144,7 +149,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 1) { //click on a drink to drink it again.
-        //TODO: prepopulate with whatever this drink *actually* is, after Tim adds "detail" property to model
         Drink *drink = [self.drinksArray objectAtIndex:indexPath.row];
         NSString *type = [drink type];
         NSInteger rowind = [[Drink types] indexOfObject:type];

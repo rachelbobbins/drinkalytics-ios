@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Person.h"
 
 @interface RootViewController : UITableViewController
 @property (nonatomic, retain) NSMutableArray *drinksArray;
-@property NSInteger myRank;
+@property Person *myPerson;
 @end

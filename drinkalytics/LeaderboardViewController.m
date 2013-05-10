@@ -80,7 +80,7 @@
     if (indexPath.section == 0) {
         NSInteger totalDrinks = 0;
         for (Person *person in [self.rankings allValues]) {
-            totalDrinks = totalDrinks + person.numberOfDrinks;
+            totalDrinks = totalDrinks + person.numberOfServings;
         }
         NSInteger remainingDrinks = 2013 - totalDrinks;
         
@@ -115,7 +115,7 @@
         Person *person = (Person *)[self.rankings objectForKey:rank];
 
         cell.textLabel.text = person.userId;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", person.numberOfDrinks];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", person.numberOfServings];
     }
     
     return cell;

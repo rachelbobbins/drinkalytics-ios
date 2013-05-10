@@ -12,5 +12,5 @@
 @property NSString *userId;
 @property NSString *name;
 @property NSInteger rank;
-@property NSInteger numberOfDrinks;
+@property NSInteger numberOfServings;
 @end

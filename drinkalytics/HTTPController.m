@@ -45,7 +45,7 @@
         Person *person = [[Person alloc] init];
         [person setUserId:nameId];
         [person setRank:[[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] integerValue]];
-        [person setNumberOfDrinks:[[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"drinks"] integerValue]];
+        [person setNumberOfServings:[[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"drinks"] integerValue]];
 
         [rankings setObject:person forKey:rank];
     }
@@ -159,20 +159,32 @@
 
 }
 
-- (NSInteger)getMyRank
+- (Person *)getMyPerson
 {
     NSArray *responseArray = [self api_rankings];
+    NSLog(@"response array: %@", responseArray);
+    Person *person = [[Person alloc] init];
     
     for (int i=0; i < [responseArray count]; i++) {
         NSString *nameId = [(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"id"];
-        NSInteger rank = [[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] integerValue];
         
         if ([nameId isEqualToString:[[NSUserDefaults standardUserDefaults] valueForKey:@"userid"]]) {
-            return rank;
+            NSLog(@"examining: %@", nameId);
+            NSInteger rank = [[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] integerValue];
+            NSInteger servings = [[(NSDictionary *) [responseArray objectAtIndex:i] objectForKey:@"drinks"] integerValue];
+
+            [person setName:nameId];
+            [person setNumberOfServings:servings];
+            [person setRank:rank];
+            NSLog(@"person: %@", person);
+            return person;            
         }
     }
-
-    return 100000;
+    
+    [person setName:@"foo"];
+    [person setNumberOfServings:0];
+    [person setRank:100];
+    return person;
 }
 
 - (NSArray *)api_rankings
