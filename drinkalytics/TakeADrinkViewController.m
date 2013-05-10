@@ -84,7 +84,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
     }
     
     if (indexPath.section == 0) {
@@ -95,7 +95,9 @@
     } else if (indexPath.section == 1) {
         self.detailsField = [[UITextField alloc] initWithFrame:CGRectMake(20, 10, cell.bounds.size.width, cell.bounds.size.height)];
         self.detailsField.placeholder = @"eg: vodka soda";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell addSubview:self.detailsField];
+        
         
     }
 
@@ -121,22 +123,22 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
+    [self showPickerView];
+}
+
+- (void)showPickerView
+{
     [self.detailsField resignFirstResponder];
     [self.view addSubview:self.typePickerView];
 }
-
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    if (indexPath.section == 0) {
+        [self showPickerView];
+    }
 }
 
 @end
