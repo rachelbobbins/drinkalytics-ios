@@ -79,13 +79,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
+    UITableViewCell *cell; 
 
     
     NSString *label;
     NSString *details;
     
     if (indexPath.section == 0) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         if (indexPath.row == 0) {
             label = @"Total Servings";
@@ -108,14 +109,18 @@
         }
         
     }  else if (indexPath.section == 1) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
         Drink *drink = [self.drinksArray objectAtIndex:indexPath.row];
         [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
         
-        if (drink.details && drink.type) {
-            label = [NSString stringWithFormat:@"%@: %@", drink.type, drink.details];
-        } else {
-            label = drink.type;
-        }
+            NSMutableString * fooLabel = [[NSMutableString alloc] init];
+            [fooLabel appendString:[NSString stringWithFormat:@"%@ (x%i)", drink.type, drink.servings]];
+            if (drink.details && [drink.details length] > 0) {
+                [fooLabel appendString:[NSString stringWithFormat:@": %@", drink.details]];
+            }
+        label = [NSString stringWithString:fooLabel];
+            
+       
         details = [drink elapsedTime];
     }
     

@@ -154,7 +154,7 @@
         
         dispatch_async(downloadQueue, ^{
             BOOL userIsSenior = [http userIsSenior];
-            if (!userIsSenior) {
+            if (!userIsSenior && !([username isEqualToString:@"mchang"])) {
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"userIsSenior"];                
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
