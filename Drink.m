@@ -26,11 +26,17 @@
     if (seconds < 60) {
         return @"< 1 minute ago";
     } else {
-        NSInteger days = seconds / (24 * 60 * 60);
-        NSInteger hours = (seconds / (60 * 60)) % 60;
-        NSInteger minutes = (seconds / 60) % 60;
+        NSInteger remainingSeconds = seconds;
+        NSInteger days = (remainingSeconds / 86400); //seconds in day
+        remainingSeconds -= (days * 86400);
         
-        if (days > 1) {
+        NSInteger hours = (remainingSeconds / 3600); //seconds in an hour
+        remainingSeconds -= (hours * 3600);
+        
+        NSInteger minutes = (remainingSeconds / 60); //second in a minute
+
+        
+        if (days > 0) {
             [components addObject:[NSString stringWithFormat:@"%id", days]];
             [components addObject:[NSString stringWithFormat:@"%ih", hours]];
             [components addObject:[NSString stringWithFormat:@"%im ago", minutes]];
