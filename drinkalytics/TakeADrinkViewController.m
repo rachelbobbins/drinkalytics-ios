@@ -69,7 +69,6 @@
     
     NSString *type = [[[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textLabel]text];
     NSString *details = self.detailsField.text;
-    NSLog(@"details: %@", details);
     NSInteger servings = self.numberOfServings.selectedSegmentIndex + 1;
 
     HTTPController *httpController = [[HTTPController alloc] init];

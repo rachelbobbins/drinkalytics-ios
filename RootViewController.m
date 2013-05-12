@@ -24,9 +24,6 @@
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        NSLog(@"initing");
-        HTTPController *http = [[HTTPController alloc] init];
-        self.myPerson = [http getMyPerson];
     }
     return self;
 }
@@ -48,6 +45,9 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+    HTTPController *http = [[HTTPController alloc] init];
+    self.myPerson = [http getMyPerson];
+    
     [self setDrinksArray];
     [self.tableView reloadData];
 }
