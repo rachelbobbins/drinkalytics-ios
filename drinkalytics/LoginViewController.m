@@ -22,7 +22,7 @@
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        // Custom initialization
+
     }
     return self;
 }
@@ -40,6 +40,13 @@
 
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+    self.savedUsers = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:@"savedUsers"];
+    self.enumerateOverUsers = [self.savedUsers keyEnumerator];
+    
+    [self.tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -51,7 +58,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -59,11 +66,27 @@
     // Return the number of rows in the section.
     switch (section) {
         case 0:
-            return 2;
+            if ( [self.savedUsers.allKeys count] > 0 ) {
+                return [self.savedUsers.allKeys count];
+            } else {
+                return 1;
+            }
         case 1:
+            return 3;
+        case 2:
             return 1;
         default: //should only be 1 section
             return 1;
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return @"Saved Accounts";
+        default:
+            return @"";
     }
 }
 
@@ -71,45 +94,55 @@
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
 
-    
     if (indexPath.section == 0) {
-        UITextField *textField;
-
-        if ([indexPath row] == 0) { //email
-            textField = [[UITextField alloc] initWithFrame:(CGRectMake(cell.bounds.origin.x + 110, cell.bounds.origin.y + 10, cell.bounds.size.width - 110, cell.bounds.size.height - 10))];
-            textField.keyboardType = UIKeyboardTypeEmailAddress;
-            textField.returnKeyType = UIReturnKeyNext;
-            textField.tag = 0;
-            [self setNameField:textField];
+        if ([self.savedUsers count] > 0) {
+            cell.textLabel.text = [self.enumerateOverUsers nextObject];
+        } else {
+            cell.textLabel.text = @"None saved";
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         }
-        else { //password
-            textField = [[UITextField alloc] initWithFrame:(CGRectMake(cell.bounds.origin.x + 110, cell.bounds.origin.y + 10, cell.bounds.size.width - 110.0, cell.bounds.size.height - 10))];
-            textField.keyboardType = UIKeyboardTypeDefault;
-            textField.returnKeyType = UIReturnKeyDone;
-            textField.secureTextEntry = YES;
-//            textField.tag = 1;
-            [self setPasswordField:textField];
-            
-        }
-        textField.adjustsFontSizeToFitWidth = YES;
-        textField.textColor = [UIColor blackColor];
-        textField.backgroundColor = [UIColor clearColor];
-        textField.autocorrectionType = UITextAutocorrectionTypeNo;
-        textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        
-        textField.clearButtonMode = UITextFieldViewModeNever;
-        [textField setEnabled: YES];
-        [cell addSubview:textField];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone]; //don't highlight cell
     }
-    if ([indexPath section] == 0) { // Email & Password Section
-        if ([indexPath row] == 0) { // Email
-            cell.textLabel.text = @"Username";
+    else if (indexPath.section == 1) {
+        if ([indexPath row] == 0 || [indexPath row] == 1) {
+            UITextField *textField;
+            
+            if ([indexPath row] == 0) { //email
+                cell.textLabel.text = @"Username";
+                textField = [[UITextField alloc] initWithFrame:(CGRectMake(cell.bounds.origin.x + 110, cell.bounds.origin.y + 10, cell.bounds.size.width - 110, cell.bounds.size.height - 10))];
+                textField.keyboardType = UIKeyboardTypeEmailAddress;
+                textField.returnKeyType = UIReturnKeyNext;
+                [self setNameField:textField];
+            }
+            else { //password
+                cell.textLabel.text = @"Password";
+                textField = [[UITextField alloc] initWithFrame:(CGRectMake(cell.bounds.origin.x + 110, cell.bounds.origin.y + 10, cell.bounds.size.width - 110.0, cell.bounds.size.height - 10))];
+                textField.keyboardType = UIKeyboardTypeDefault;
+                textField.returnKeyType = UIReturnKeyDone;
+//                textField.returnKeyType
+                textField.secureTextEntry = YES;
+                [self setPasswordField:textField];
+                
+            }
+            textField.adjustsFontSizeToFitWidth = YES;
+            textField.textColor = [UIColor blackColor];
+            textField.backgroundColor = [UIColor clearColor];
+            textField.autocorrectionType = UITextAutocorrectionTypeNo;
+            textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            
+            textField.clearButtonMode = UITextFieldViewModeNever;
+            textField.delegate = self;
+            textField.enablesReturnKeyAutomatically=YES;
+            [textField setEnabled: YES];
+            [cell addSubview:textField];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone]; //don't highlight cell
+        } else if ([indexPath row] == 2) {
+            cell.textLabel.text = @"Save Credentials?";
+            UISwitch *saveCredentials = [[UISwitch alloc] init];
+            [self setCacheCredentialsSwitch:saveCredentials];
+            [cell setAccessoryView:saveCredentials];
         }
-        else {
-            cell.textLabel.text = @"Password";
-        }
-    } else {
+
+    } else if (indexPath.section == 2) {
         cell.textLabel.text = @"Log In";
         cell.tag = 2;
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
@@ -123,13 +156,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.section == 0) {
-//        if (indexPath.row == 0) {
-//            [self.nameField ];
-//        }
-//    }
-//    else
-        if (indexPath.section == 1) {
+    if (indexPath.section == 0) { //prepoulate username with email/password
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        self.nameField.text = cell.textLabel.text;
+        self.passwordField.text = [self.savedUsers valueForKey:cell.textLabel.text];
+        self.cacheCredentialsSwitch.on = YES;
+        [cell setSelected:NO];
+    } else if (indexPath.section == 2) {
         [self loginViaOlinApps];
     } 
 }
@@ -137,8 +170,10 @@
 - (void)loginViaOlinApps
 {
     [self.view endEditing:YES];
+    
     NSString *username = [self.nameField text];
     NSString *password = [self.passwordField text];
+    BOOL shouldSaveCredentials = [self.cacheCredentialsSwitch isOn];
     self.passwordField.text = @"";
     
     UIActivityIndicatorView *spinner = [self createSpinner];
@@ -149,7 +184,7 @@
     
     HTTPController *http = [[HTTPController alloc] init];
     
-    if ([http loginWithUsername:username andPassword:password]) {
+    if ([http loginWithUsername:username andPassword:password andSaveCredentials:shouldSaveCredentials]) {
         dispatch_queue_t downloadQueue = dispatch_queue_create("downloader", NULL);
         
         dispatch_async(downloadQueue, ^{
@@ -211,5 +246,16 @@
     return spinner;
 }
 
+//-(void)textFieldDidEndEditing:(UITextField *)textField
+//{
+//    NSLog(@"here");
+//    [textField resignFirstResponder];
+//}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return NO;
+}
 
 @end

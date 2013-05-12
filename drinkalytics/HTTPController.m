@@ -96,7 +96,7 @@
     
 }
 
-- (BOOL)loginWithUsername:(NSString *)username andPassword:(NSString *)password
+- (BOOL)loginWithUsername:(NSString *)username andPassword:(NSString *)password andSaveCredentials:(BOOL)shouldSave
 {
     //obtain session cookie
     NSURL *url = [[NSURL alloc] initWithString:@"https://olinapps.herokuapp.com/api/exchangelogin"];
@@ -151,6 +151,17 @@
         [[NSUserDefaults standardUserDefaults] setValue:userId forKey:@"userid"];
         [[NSUserDefaults standardUserDefaults] setValue:sessionid forKey:@"sessionid"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        //save login/password, if selected (enables multiple users on device). delete if was checked, but no longer is
+        
+        NSMutableDictionary *savedCredentials = [[[NSUserDefaults standardUserDefaults] objectForKey:@"savedUsers"] mutableCopy];
+        if (shouldSave) {
+            [savedCredentials setValue:password forKey:username];
+        } else {
+            [savedCredentials removeObjectForKey:username];
+        }
+        [[NSUserDefaults standardUserDefaults] setObject:savedCredentials forKey:@"savedUsers"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
 
         return YES;
     } else {
@@ -162,21 +173,18 @@
 - (Person *)getMyPerson
 {
     NSArray *responseArray = [self api_rankings];
-    NSLog(@"response array: %@", responseArray);
     Person *person = [[Person alloc] init];
     
     for (int i=0; i < [responseArray count]; i++) {
         NSString *nameId = [(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"id"];
         
         if ([nameId isEqualToString:[[NSUserDefaults standardUserDefaults] valueForKey:@"userid"]]) {
-            NSLog(@"examining: %@", nameId);
             NSInteger rank = [[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] integerValue];
             NSInteger servings = [[(NSDictionary *) [responseArray objectAtIndex:i] objectForKey:@"drinks"] integerValue];
 
             [person setName:nameId];
             [person setNumberOfServings:servings];
             [person setRank:rank];
-            NSLog(@"person: %@", person);
             return person;            
         }
     }

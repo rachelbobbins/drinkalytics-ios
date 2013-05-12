@@ -13,6 +13,6 @@
 - (NSDictionary *)getRankings;
 - (NSArray *)getMyDrinks:(NSString *)userId;
 - (Person *)getMyPerson;
-- (BOOL)loginWithUsername:(NSString *)username andPassword:(NSString *)password;
+- (BOOL)loginWithUsername:(NSString *)username andPassword:(NSString *)password andSaveCredentials:(BOOL)shouldSave;
 - (BOOL)userIsSenior;
 @end

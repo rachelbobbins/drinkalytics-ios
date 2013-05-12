@@ -183,8 +183,12 @@
 
 - (void)logout
 {
-    //clear sessionid, userid, userissenior
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
+    NSLog(@"logging out: all keys: %@", [NSUserDefaults standardUserDefaults]);
+    //clear everything EXCEPT for list of saved user credentials
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"userid"];
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"sessionid"];
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"savedCookies"];
+    
     NSHTTPCookie *cookie;
     NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     for (cookie in [storage cookies]) {

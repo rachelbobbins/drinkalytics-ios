@@ -29,6 +29,11 @@
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
         }
     }
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"savedUsers"] == nil) {        [[NSUserDefaults standardUserDefaults] setObject:[[NSDictionary alloc] init] forKey:@"savedUsers"];
+    } 
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
