@@ -107,10 +107,6 @@
         [cell addSubview:self.detailsField];
     }
 
-        
-        
-//    }
-
     
     return cell;
 }
@@ -150,6 +146,7 @@
 {
     if (indexPath.section == 0 && indexPath.row == 0) {
         [self showPickerView];
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
     }
 }
 
