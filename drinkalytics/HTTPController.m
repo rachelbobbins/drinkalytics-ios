@@ -182,14 +182,12 @@
             NSInteger rank = [[(NSDictionary *)[responseArray objectAtIndex:i] objectForKey:@"rank"] integerValue];
             NSInteger servings = [[(NSDictionary *) [responseArray objectAtIndex:i] objectForKey:@"drinks"] integerValue];
 
-            [person setName:nameId];
             [person setNumberOfServings:servings];
             [person setRank:rank];
             return person;            
         }
     }
     
-    [person setName:@"foo"];
     [person setNumberOfServings:0];
     [person setRank:100];
     return person;

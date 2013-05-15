@@ -9,5 +9,10 @@
 #import "Person.h"
 
 @implementation Person
-
+- (NSString *) name
+{
+    NSString *result = [self.userId stringByReplacingOccurrencesOfString:@"." withString:@" "];
+    result = [result capitalizedString];
+    return result;
+}
 @end

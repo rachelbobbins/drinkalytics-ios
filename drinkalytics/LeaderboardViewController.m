@@ -114,7 +114,7 @@
         NSString *rank = [NSString stringWithFormat:@"%i", (indexPath.row + 1)];
         Person *person = (Person *)[self.rankings objectForKey:rank];
 
-        cell.textLabel.text = person.userId;
+        cell.textLabel.text = [NSString stringWithFormat:@"%i. %@", (indexPath.row + 1), person.name];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%i", person.numberOfServings];
     }
     
