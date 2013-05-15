@@ -146,7 +146,7 @@
 {
     if (indexPath.section == 0 && indexPath.row == 0) {
         [self showPickerView];
-        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];  
     }
 }
 

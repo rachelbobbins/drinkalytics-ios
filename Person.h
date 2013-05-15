@@ -10,7 +10,6 @@
 
 @interface Person : NSObject
 @property NSString *userId;
-//@property NSString *name;
 @property NSInteger rank;
 @property NSInteger numberOfServings;
 
