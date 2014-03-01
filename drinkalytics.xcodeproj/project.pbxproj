@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5A30E5301735AC5E001DC405 /* DrinkPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A30E52F1735AC5E001DC405 /* DrinkPickerView.m */; };
-		5A8F801B1737483A0072756F /* HTTPController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8F801A1737483A0072756F /* HTTPController.m */; };
+		5A27C9C218C19BDC0074BDBF /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A27C9C118C19BDC0074BDBF /* Person.m */; };
+		5A27C9CD18C19D410074BDBF /* LeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A27C9C618C19D410074BDBF /* LeaderboardViewController.m */; };
+		5A27C9CE18C19D410074BDBF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A27C9C818C19D410074BDBF /* LoginViewController.m */; };
+		5A27C9CF18C19D410074BDBF /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A27C9CA18C19D410074BDBF /* RootViewController.m */; };
+		5A27C9D018C19D410074BDBF /* TakeADrinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A27C9CC18C19D410074BDBF /* TakeADrinkViewController.m */; };
+		5A27C9D318C19D4D0074BDBF /* DrinkPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A27C9D218C19D4D0074BDBF /* DrinkPickerView.m */; };
+		5A27C9D618C19D5B0074BDBF /* HTTPController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A27C9D518C19D5B0074BDBF /* HTTPController.m */; };
+		5A27C9D918C19DC50074BDBF /* Drink.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A27C9D818C19DC50074BDBF /* Drink.m */; };
 		5AC0BA88173C7E930023B495 /* drinkIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC0BA87173C7E930023B495 /* drinkIcon.png */; };
 		5AD52263171F1B9A002D2A3F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD52262171F1B9A002D2A3F /* UIKit.framework */; };
 		5AD52265171F1B9A002D2A3F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD52264171F1B9A002D2A3F /* Foundation.framework */; };
@@ -21,20 +27,26 @@
 		5AD52279171F1B9A002D2A3F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AD52278171F1B9A002D2A3F /* Default@2x.png */; };
 		5AD5227B171F1B9A002D2A3F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AD5227A171F1B9A002D2A3F /* Default-568h@2x.png */; };
 		5AD5227E171F1B9A002D2A3F /* drinkalytics.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5AD5227C171F1B9A002D2A3F /* drinkalytics.xcdatamodeld */; };
-		5AD5228F171F2439002D2A3F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD5228E171F2439002D2A3F /* LoginViewController.m */; };
-		5AD52295171F5955002D2A3F /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD52294171F5955002D2A3F /* RootViewController.m */; };
-		5AD52298171F603A002D2A3F /* LeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD52297171F603A002D2A3F /* LeaderboardViewController.m */; };
-		5AD522A4171F832A002D2A3F /* TakeADrinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD522A3171F832A002D2A3F /* TakeADrinkViewController.m */; };
-		5AD522B2171F9F93002D2A3F /* Drink.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD522B1171F9F93002D2A3F /* Drink.m */; };
-		5ADA22BF173B13420013A143 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADA22BE173B13420013A143 /* Person.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5A30E52E1735AC5E001DC405 /* DrinkPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrinkPickerView.h; sourceTree = "<group>"; };
-		5A30E52F1735AC5E001DC405 /* DrinkPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrinkPickerView.m; sourceTree = "<group>"; };
-		5A8F80191737483A0072756F /* HTTPController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPController.h; sourceTree = "<group>"; };
-		5A8F801A1737483A0072756F /* HTTPController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPController.m; sourceTree = "<group>"; };
-		5AC0BA87173C7E930023B495 /* drinkIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drinkIcon.png; sourceTree = "<group>"; };
+		5A27C9C018C19BDC0074BDBF /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		5A27C9C118C19BDC0074BDBF /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		5A27C9C518C19D410074BDBF /* LeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaderboardViewController.h; sourceTree = "<group>"; };
+		5A27C9C618C19D410074BDBF /* LeaderboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderboardViewController.m; sourceTree = "<group>"; };
+		5A27C9C718C19D410074BDBF /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		5A27C9C818C19D410074BDBF /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		5A27C9C918C19D410074BDBF /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		5A27C9CA18C19D410074BDBF /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		5A27C9CB18C19D410074BDBF /* TakeADrinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TakeADrinkViewController.h; sourceTree = "<group>"; };
+		5A27C9CC18C19D410074BDBF /* TakeADrinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TakeADrinkViewController.m; sourceTree = "<group>"; };
+		5A27C9D118C19D4D0074BDBF /* DrinkPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrinkPickerView.h; sourceTree = "<group>"; };
+		5A27C9D218C19D4D0074BDBF /* DrinkPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrinkPickerView.m; sourceTree = "<group>"; };
+		5A27C9D418C19D5B0074BDBF /* HTTPController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPController.h; sourceTree = "<group>"; };
+		5A27C9D518C19D5B0074BDBF /* HTTPController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPController.m; sourceTree = "<group>"; };
+		5A27C9D718C19DC50074BDBF /* Drink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drink.h; sourceTree = "<group>"; };
+		5A27C9D818C19DC50074BDBF /* Drink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Drink.m; sourceTree = "<group>"; };
+		5AC0BA87173C7E930023B495 /* drinkIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = drinkIcon.png; path = ../drinkIcon.png; sourceTree = "<group>"; };
 		5AD5225E171F1B9A002D2A3F /* drinkalytics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = drinkalytics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AD52262171F1B9A002D2A3F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5AD52264171F1B9A002D2A3F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -50,18 +62,6 @@
 		5AD52278171F1B9A002D2A3F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		5AD5227A171F1B9A002D2A3F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		5AD5227D171F1B9A002D2A3F /* drinkalytics.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = drinkalytics.xcdatamodel; sourceTree = "<group>"; };
-		5AD5228D171F2439002D2A3F /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
-		5AD5228E171F2439002D2A3F /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		5AD52293171F5955002D2A3F /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = ../RootViewController.h; sourceTree = "<group>"; };
-		5AD52294171F5955002D2A3F /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = ../RootViewController.m; sourceTree = "<group>"; };
-		5AD52296171F603A002D2A3F /* LeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaderboardViewController.h; sourceTree = "<group>"; };
-		5AD52297171F603A002D2A3F /* LeaderboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderboardViewController.m; sourceTree = "<group>"; };
-		5AD522A2171F832A002D2A3F /* TakeADrinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TakeADrinkViewController.h; sourceTree = "<group>"; };
-		5AD522A3171F832A002D2A3F /* TakeADrinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TakeADrinkViewController.m; sourceTree = "<group>"; };
-		5AD522B0171F9F93002D2A3F /* Drink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Drink.h; path = ../Drink.h; sourceTree = "<group>"; };
-		5AD522B1171F9F93002D2A3F /* Drink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Drink.m; path = ../Drink.m; sourceTree = "<group>"; };
-		5ADA22BD173B13420013A143 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Person.h; path = ../Person.h; sourceTree = "<group>"; };
-		5ADA22BE173B13420013A143 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Person.m; path = ../Person.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,10 +79,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A27C9BF18C19B570074BDBF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5A27C9D718C19DC50074BDBF /* Drink.h */,
+				5A27C9D818C19DC50074BDBF /* Drink.m */,
+				5A27C9D418C19D5B0074BDBF /* HTTPController.h */,
+				5A27C9D518C19D5B0074BDBF /* HTTPController.m */,
+				5A27C9C018C19BDC0074BDBF /* Person.h */,
+				5A27C9C118C19BDC0074BDBF /* Person.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5A27C9C318C19C470074BDBF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5A27C9C518C19D410074BDBF /* LeaderboardViewController.h */,
+				5A27C9C618C19D410074BDBF /* LeaderboardViewController.m */,
+				5A27C9C718C19D410074BDBF /* LoginViewController.h */,
+				5A27C9C818C19D410074BDBF /* LoginViewController.m */,
+				5A27C9C918C19D410074BDBF /* RootViewController.h */,
+				5A27C9CA18C19D410074BDBF /* RootViewController.m */,
+				5A27C9CB18C19D410074BDBF /* TakeADrinkViewController.h */,
+				5A27C9CC18C19D410074BDBF /* TakeADrinkViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		5A27C9C418C19C6D0074BDBF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5A27C9D118C19D4D0074BDBF /* DrinkPickerView.h */,
+				5A27C9D218C19D4D0074BDBF /* DrinkPickerView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		5AD52253171F1B9A002D2A3F = {
 			isa = PBXGroup;
 			children = (
-				5AC0BA87173C7E930023B495 /* drinkIcon.png */,
 				5AD5226A171F1B9A002D2A3F /* drinkalytics */,
 				5AD52261171F1B9A002D2A3F /* Frameworks */,
 				5AD5225F171F1B9A002D2A3F /* Products */,
@@ -111,22 +147,9 @@
 		5AD5226A171F1B9A002D2A3F /* drinkalytics */ = {
 			isa = PBXGroup;
 			children = (
-				5ADA22BD173B13420013A143 /* Person.h */,
-				5ADA22BE173B13420013A143 /* Person.m */,
-				5A30E52E1735AC5E001DC405 /* DrinkPickerView.h */,
-				5A30E52F1735AC5E001DC405 /* DrinkPickerView.m */,
-				5AD522B0171F9F93002D2A3F /* Drink.h */,
-				5AD522B1171F9F93002D2A3F /* Drink.m */,
-				5AD52293171F5955002D2A3F /* RootViewController.h */,
-				5AD52294171F5955002D2A3F /* RootViewController.m */,
-				5AD52296171F603A002D2A3F /* LeaderboardViewController.h */,
-				5AD52297171F603A002D2A3F /* LeaderboardViewController.m */,
-				5AD522A2171F832A002D2A3F /* TakeADrinkViewController.h */,
-				5AD522A3171F832A002D2A3F /* TakeADrinkViewController.m */,
-				5AD5228D171F2439002D2A3F /* LoginViewController.h */,
-				5AD5228E171F2439002D2A3F /* LoginViewController.m */,
-				5A8F80191737483A0072756F /* HTTPController.h */,
-				5A8F801A1737483A0072756F /* HTTPController.m */,
+				5A27C9C418C19C6D0074BDBF /* Views */,
+				5A27C9C318C19C470074BDBF /* Controllers */,
+				5A27C9BF18C19B570074BDBF /* Models */,
 				5AD52273171F1B9A002D2A3F /* DrinkAppDelegate.h */,
 				5AD52274171F1B9A002D2A3F /* DrinkAppDelegate.m */,
 				5AD5227C171F1B9A002D2A3F /* drinkalytics.xcdatamodeld */,
@@ -138,6 +161,7 @@
 		5AD5226B171F1B9A002D2A3F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5AC0BA87173C7E930023B495 /* drinkIcon.png */,
 				5AD5226C171F1B9A002D2A3F /* drinkalytics-Info.plist */,
 				5AD5226D171F1B9A002D2A3F /* InfoPlist.strings */,
 				5AD52270171F1B9A002D2A3F /* main.m */,
@@ -216,17 +240,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A27C9D018C19D410074BDBF /* TakeADrinkViewController.m in Sources */,
+				5A27C9CE18C19D410074BDBF /* LoginViewController.m in Sources */,
+				5A27C9D918C19DC50074BDBF /* Drink.m in Sources */,
+				5A27C9D318C19D4D0074BDBF /* DrinkPickerView.m in Sources */,
 				5AD52271171F1B9A002D2A3F /* main.m in Sources */,
+				5A27C9CD18C19D410074BDBF /* LeaderboardViewController.m in Sources */,
 				5AD52275171F1B9A002D2A3F /* DrinkAppDelegate.m in Sources */,
+				5A27C9C218C19BDC0074BDBF /* Person.m in Sources */,
+				5A27C9D618C19D5B0074BDBF /* HTTPController.m in Sources */,
+				5A27C9CF18C19D410074BDBF /* RootViewController.m in Sources */,
 				5AD5227E171F1B9A002D2A3F /* drinkalytics.xcdatamodeld in Sources */,
-				5AD5228F171F2439002D2A3F /* LoginViewController.m in Sources */,
-				5AD52295171F5955002D2A3F /* RootViewController.m in Sources */,
-				5AD52298171F603A002D2A3F /* LeaderboardViewController.m in Sources */,
-				5AD522A4171F832A002D2A3F /* TakeADrinkViewController.m in Sources */,
-				5AD522B2171F9F93002D2A3F /* Drink.m in Sources */,
-				5A30E5301735AC5E001DC405 /* DrinkPickerView.m in Sources */,
-				5A8F801B1737483A0072756F /* HTTPController.m in Sources */,
-				5ADA22BF173B13420013A143 /* Person.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

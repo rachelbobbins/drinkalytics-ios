@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "Person.h"
-@interface HTTPController : NSObject 
+
+@interface HTTPController : NSObject
 - (void)postDrinkWithType:(NSString *)name andDetails:(NSString *)detail andServings:(NSInteger)servings;
 - (NSDictionary *)getRankings;
 - (NSArray *)getMyDrinks:(NSString *)userId;
